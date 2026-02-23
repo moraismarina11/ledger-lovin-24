@@ -5,16 +5,18 @@ import CustoCentroTab from "@/components/dashboard/CustoCentroTab";
 import TipoPagamentoTab from "@/components/dashboard/TipoPagamentoTab";
 import PosicaoFornecedoresTab from "@/components/dashboard/PosicaoFornecedoresTab";
 import PosicaoClientesTab from "@/components/dashboard/PosicaoClientesTab";
-import { top10Data, custoCentroMEBData, custoCentroMacaeData, tipoPagamentoData } from "@/components/dashboard/data";
+import { top10Data, custoCentroMEBData, custoCentroMacaeData, tipoPagamentoData, computeS2 } from "@/components/dashboard/data";
 import { fornecedoresData, clientesData } from "@/components/dashboard/agingData";
 import { PERIODS, type PeriodId } from "@/components/dashboard/shared";
 
 const Index = () => {
   const [period, setPeriod] = useState<PeriodId>("s1");
 
-  const filterByPeriod = <T extends { period: string }>(data: T[]): T[] => {
-    if (period === "total") return data;
-    return data.filter((d) => d.period === period);
+  const filterByPeriod = <T extends { period: string }>(data: T[], keyField: string): T[] => {
+    if (period === "total") return data.filter((d) => d.period === "total");
+    if (period === "s1") return data.filter((d) => d.period === "s1");
+    // s2: compute difference (total - s1)
+    return computeS2(data, keyField);
   };
 
   return (
@@ -73,16 +75,16 @@ const Index = () => {
           </TabsList>
 
           <TabsContent value="top10">
-            <Top10Tab data={filterByPeriod(top10Data)} />
+            <Top10Tab data={filterByPeriod(top10Data, "supplier")} />
           </TabsContent>
 
           <TabsContent value="tipo">
-            <TipoPagamentoTab data={filterByPeriod(tipoPagamentoData)} />
+            <TipoPagamentoTab data={filterByPeriod(tipoPagamentoData, "company")} />
           </TabsContent>
 
           <TabsContent value="cc-meb">
             <CustoCentroTab
-              data={filterByPeriod(custoCentroMEBData)}
+              data={filterByPeriod(custoCentroMEBData, "cc")}
               title="Centro de Custo — Mota Engil Brasil"
               grouped
             />
@@ -90,7 +92,7 @@ const Index = () => {
 
           <TabsContent value="cc-macae">
             <CustoCentroTab
-              data={filterByPeriod(custoCentroMacaeData)}
+              data={filterByPeriod(custoCentroMacaeData, "cc")}
               title="Centro de Custo — Macaé"
             />
           </TabsContent>
