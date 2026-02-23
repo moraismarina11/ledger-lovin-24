@@ -1,16 +1,21 @@
 export const COMPANY_COLORS: Record<string, string> = {
+  "Consórcio Alsub": "hsl(210, 70%, 50%)",
+  "MEBR": "hsl(340, 60%, 50%)",
   "Macaé": "hsl(150, 60%, 40%)",
-  "Mota Engil Brasil": "hsl(30, 80%, 50%)",
+  "MEFB": "hsl(150, 60%, 40%)",
+  "Mota Engil Brasil": "hsl(215, 70%, 45%)",
+  "Mota-Engil Brasil": "hsl(215, 70%, 45%)",
+  "Tracevia": "hsl(270, 50%, 55%)",
 };
 
 export const COST_TYPE_COLORS: Record<string, string> = {
-  financiamento: "hsl(210, 70%, 50%)",
-  fornecedor: "hsl(340, 60%, 50%)",
-  imposto: "hsl(30, 80%, 50%)",
-  outrosCustos: "hsl(0, 65%, 50%)",
-  outrosRecebimentos: "hsl(150, 60%, 40%)",
-  recCliente: "hsl(120, 50%, 45%)",
-  salarios: "hsl(270, 50%, 55%)",
+  financiamento: "hsl(215, 70%, 45%)",
+  fornecedor: "hsl(0, 65%, 50%)",
+  imposto: "hsl(30, 85%, 50%)",
+  outrosCustos: "hsl(340, 60%, 50%)",
+  outrosRecebimentos: "hsl(160, 55%, 42%)",
+  recCliente: "hsl(120, 50%, 40%)",
+  salarios: "hsl(270, 50%, 50%)",
 };
 
 export const COST_TYPE_LABELS: Record<string, string> = {
@@ -39,11 +44,11 @@ export const GROUP_LABELS: Record<string, string> = {
 };
 
 export const GROUP_COLORS: Record<string, string> = {
-  "Obra": "hsl(210, 70%, 50%)",
-  "Estrutura": "hsl(340, 60%, 50%)",
-  "Unidades de apoio": "hsl(150, 60%, 40%)",
-  "Financeiro": "hsl(30, 80%, 50%)",
-  "Outros": "hsl(270, 50%, 55%)",
+  Obra: "hsl(215, 70%, 45%)",
+  Estrutura: "hsl(0, 65%, 50%)",
+  "Unidades de apoio": "hsl(160, 55%, 42%)",
+  Financeiro: "hsl(30, 85%, 50%)",
+  Outros: "hsl(270, 50%, 50%)",
 };
 
 export const formatCurrency = (v: number) =>
@@ -59,9 +64,7 @@ export const formatShort = (v: number) => {
 
 export function groupLabel(cc: string): string {
   const prefix = cc.charAt(0);
-  if (["1", "2", "3", "4"].includes(prefix)) {
-    return GROUP_LABELS[prefix];
-  }
+  if (["1", "2", "3", "4"].includes(prefix)) return GROUP_LABELS[prefix];
   return "Outros";
 }
 
