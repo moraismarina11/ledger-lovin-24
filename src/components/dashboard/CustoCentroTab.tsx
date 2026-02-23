@@ -36,11 +36,10 @@ function groupData(data: CustoCentroEntry[]): GroupedEntry[] {
 const CcTooltip = ({ active, payload }: any) => {
   if (!active || !payload?.length) return null;
   const d = payload[0].payload;
-  const label = d.group || d.cc;
   return (
-    <div className="bg-card border border-border rounded-lg p-3 shadow-lg max-w-xs">
-      <p className="font-semibold text-card-foreground text-sm">{label}</p>
-      <p className="text-primary font-bold mt-1">Total: {formatCurrency(d.total)}</p>
+    <div className="bg-card border border-border rounded-lg p-3 shadow-xl text-sm">
+      <p className="font-bold text-card-foreground">{d.group || d.cc}</p>
+      <p className="font-semibold mt-1">Total: {formatCurrency(d.total)}</p>
     </div>
   );
 };
@@ -65,63 +64,67 @@ const CustoCentroTab = ({ data, title, grouped = false }: Props) => {
   }, {} as Record<string, number>);
   const grandTotal = data.reduce((s, d) => s + d.total, 0);
 
-  // Pie data for cost distribution
+  // Pie data
   const pieData = COST_KEYS.map((k) => ({
     name: COST_TYPE_LABELS[k],
     value: Math.abs(totals[k]),
     color: COST_TYPE_COLORS[k],
   })).filter((d) => d.value > 0).sort((a, b) => b.value - a.value);
 
-  const chartHeight = Math.max(300, displayData.length * 44 + 40);
+  const chartHeight = Math.max(300, displayData.length * 44 + 60);
 
   return (
-    <div className="space-y-4">
-      <h3 className="text-lg font-semibold text-foreground">{title}</h3>
-
-      {/* KPIs */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+    <div className="space-y-6">
+      {/* KPI Cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {COST_KEYS.filter((k) => totals[k] !== 0).map((k) => (
-          <div key={k} className="bg-card border border-border rounded-xl p-3 shadow-sm">
-            <p className="text-xs text-muted-foreground uppercase tracking-wide">{COST_TYPE_LABELS[k]}</p>
-            <p className="text-lg font-bold mt-1" style={{ color: COST_TYPE_COLORS[k] }}>{formatCurrency(totals[k])}</p>
+          <div key={k} className="bg-card rounded-xl border border-border p-4 shadow-sm">
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: COST_TYPE_COLORS[k] }} />
+              <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{COST_TYPE_LABELS[k]}</span>
+            </div>
+            <p className="text-lg font-bold" style={{ color: COST_TYPE_COLORS[k] }}>{formatCurrency(totals[k])}</p>
           </div>
         ))}
-        <div className="bg-card border border-border rounded-xl p-3 shadow-sm">
-          <p className="text-xs text-muted-foreground uppercase tracking-wide">Total Geral</p>
-          <p className="text-lg font-bold mt-1 text-primary">{formatCurrency(grandTotal)}</p>
+        <div className="bg-card rounded-xl border-2 border-primary/30 p-4 shadow-sm">
+          <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Total Geral</span>
+          <p className="text-lg font-bold text-primary mt-1.5">{formatCurrency(grandTotal)}</p>
         </div>
       </div>
 
-      {/* Pie + Bar */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <div className="bg-card border border-border rounded-xl p-4 shadow-sm">
-          <p className="text-sm font-semibold text-foreground mb-2">Distribuição por Tipo</p>
-          <ResponsiveContainer width="100%" height={250}>
+      {/* Pie + Bar layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+        {/* Pie */}
+        <div className="bg-card rounded-xl border border-border p-5 shadow-sm">
+          <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Distribuição</h4>
+          <ResponsiveContainer width="100%" height={220}>
             <PieChart>
-              <Pie data={pieData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={90} innerRadius={40} paddingAngle={2}>
+              <Pie data={pieData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={85} innerRadius={35} paddingAngle={2} strokeWidth={0}>
                 {pieData.map((d, i) => <Cell key={i} fill={d.color} />)}
               </Pie>
               <Tooltip formatter={(v: number) => formatCurrency(v)} />
             </PieChart>
           </ResponsiveContainer>
-          <div className="flex flex-wrap gap-2 mt-2">
+          <div className="space-y-1.5 mt-3">
             {pieData.map((d) => (
-              <div key={d.name} className="flex items-center gap-1.5 text-xs">
-                <span className="w-2.5 h-2.5 rounded-full" style={{ background: d.color }} />
-                <span className="text-muted-foreground">{d.name}</span>
+              <div key={d.name} className="flex items-center gap-2 text-xs">
+                <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: d.color }} />
+                <span className="text-muted-foreground truncate">{d.name}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="lg:col-span-2 bg-card border border-border rounded-xl p-4 shadow-sm">
+        {/* Bar */}
+        <div className="lg:col-span-3 bg-card rounded-xl border border-border p-5 shadow-sm">
+          <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">{title}</h4>
           <ResponsiveContainer width="100%" height={chartHeight}>
-            <BarChart data={displayData} layout="vertical" margin={{ left: 10, right: 30, top: 5, bottom: 5 }}>
+            <BarChart data={displayData} layout="vertical" margin={{ left: 20, right: 40, top: 5, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="hsl(var(--border))" />
               <XAxis type="number" tickFormatter={formatShort} tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }} />
-              <YAxis type="category" dataKey={grouped ? "group" : "cc"} width={160} tick={{ fill: "hsl(var(--foreground))", fontSize: 11 }} />
+              <YAxis type="category" dataKey={grouped ? "group" : "cc"} width={160} tick={{ fill: "hsl(var(--foreground))", fontSize: 12 }} />
               <Tooltip content={<CcTooltip />} cursor={{ fill: "hsl(var(--muted) / 0.4)" }} />
-              <Bar dataKey="total" radius={[0, 6, 6, 0]} barSize={24}>
+              <Bar dataKey="total" radius={[0, 4, 4, 0]} barSize={26}>
                 {displayData.map((d: any, i) => (
                   <Cell key={i} fill={grouped ? (GROUP_COLORS[d.group] || "hsl(var(--primary))") : "hsl(var(--primary))"} />
                 ))}
@@ -132,56 +135,64 @@ const CustoCentroTab = ({ data, title, grouped = false }: Props) => {
       </div>
 
       {/* Table */}
-      <div className="bg-card border border-border rounded-xl shadow-sm overflow-auto">
+      <div className="bg-card rounded-xl border border-border shadow-sm overflow-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-border bg-muted/50">
-              <th className="text-left p-3 font-semibold text-foreground">{grouped ? "Grupo" : "CC"}</th>
+            <tr className="border-b-2 border-border bg-muted/40">
+              <th className="text-left p-4 font-bold text-foreground">{grouped ? "Grupo" : "Centro de Custo"}</th>
               {COST_KEYS.map((k) => (
-                <th key={k} className="text-right p-3 font-semibold text-foreground whitespace-nowrap">{COST_TYPE_LABELS[k]}</th>
+                <th key={k} className="text-right p-3 font-bold text-foreground whitespace-nowrap text-xs">
+                  <div className="flex items-center justify-end gap-1.5">
+                    <span className="w-2 h-2 rounded-full" style={{ background: COST_TYPE_COLORS[k] }} />
+                    {COST_TYPE_LABELS[k]}
+                  </div>
+                </th>
               ))}
-              <th className="text-right p-3 font-semibold text-foreground">Total</th>
+              <th className="text-right p-4 font-bold text-foreground">Total</th>
             </tr>
           </thead>
           <tbody>
-            {(grouped ? groupedData!.sort((a, b) => b.total - a.total) : [...data].sort((a, b) => b.total - a.total)).map((d: any) => (
+            {(grouped ? groupedData!.sort((a, b) => b.total - a.total) : [...data].sort((a, b) => b.total - a.total)).map((d: any, i: number) => (
               <>
                 <tr
                   key={d.group || d.cc}
-                  className={`border-b border-border/50 hover:bg-muted/30 ${grouped ? "cursor-pointer" : ""}`}
+                  className={`border-b border-border/50 transition-colors ${grouped ? "cursor-pointer hover:bg-muted/30" : ""} ${i % 2 === 0 ? "bg-muted/10" : ""}`}
                   onClick={() => grouped && setExpandedGroup(expandedGroup === d.group ? null : d.group)}
                 >
                   <td className="p-3 text-foreground font-medium">
-                    {grouped && <span className="mr-2 text-muted-foreground">{expandedGroup === d.group ? "▼" : "▶"}</span>}
+                    {grouped && (
+                      <span className="inline-block w-5 text-muted-foreground text-xs">{expandedGroup === d.group ? "▼" : "▶"}</span>
+                    )}
+                    {grouped && <span className="w-3 h-3 rounded-full inline-block mr-2 align-middle" style={{ background: GROUP_COLORS[d.group] || "hsl(var(--primary))" }} />}
                     {d.group || d.cc}
                     {grouped && <span className="ml-2 text-xs text-muted-foreground">({d.children.length})</span>}
                   </td>
                   {COST_KEYS.map((k) => (
-                    <td key={k} className="p-3 text-right font-mono text-sm">
-                      {d[k] !== 0 ? formatCurrency(d[k]) : "-"}
-                    </td>
+                    <td key={k} className="p-3 text-right font-mono text-xs">{d[k] !== 0 ? formatCurrency(d[k]) : "-"}</td>
                   ))}
                   <td className="p-3 text-right font-mono font-bold text-sm">{formatCurrency(d.total)}</td>
                 </tr>
-                {grouped && expandedGroup === d.group && d.children.sort((a: CustoCentroEntry, b: CustoCentroEntry) => b.total - a.total).map((child: CustoCentroEntry) => (
-                  <tr key={child.cc} className="border-b border-border/30 bg-muted/20">
-                    <td className="p-3 pl-10 text-muted-foreground">{child.cc}</td>
-                    {COST_KEYS.map((k) => (
-                      <td key={k} className="p-3 text-right font-mono text-xs text-muted-foreground">
-                        {child[k] !== 0 ? formatCurrency(child[k]) : "-"}
-                      </td>
-                    ))}
-                    <td className="p-3 text-right font-mono font-bold text-xs">{formatCurrency(child.total)}</td>
-                  </tr>
-                ))}
+                {grouped && expandedGroup === d.group && d.children
+                  .sort((a: CustoCentroEntry, b: CustoCentroEntry) => b.total - a.total)
+                  .map((child: CustoCentroEntry) => (
+                    <tr key={child.cc} className="border-b border-border/30 bg-muted/20">
+                      <td className="p-3 pl-12 text-muted-foreground text-xs">{child.cc}</td>
+                      {COST_KEYS.map((k) => (
+                        <td key={k} className="p-3 text-right font-mono text-xs text-muted-foreground">
+                          {child[k] !== 0 ? formatCurrency(child[k]) : "-"}
+                        </td>
+                      ))}
+                      <td className="p-3 text-right font-mono font-semibold text-xs">{formatCurrency(child.total)}</td>
+                    </tr>
+                  ))}
               </>
             ))}
-            <tr className="bg-muted/50 font-bold">
-              <td className="p-3 text-foreground">Total Geral</td>
+            <tr className="bg-muted/50 border-t-2 border-border">
+              <td className="p-4 font-bold text-foreground">Total Geral</td>
               {COST_KEYS.map((k) => (
-                <td key={k} className="p-3 text-right font-mono">{formatCurrency(totals[k])}</td>
+                <td key={k} className="p-3 text-right font-mono font-bold text-xs">{formatCurrency(totals[k])}</td>
               ))}
-              <td className="p-3 text-right font-mono">{formatCurrency(grandTotal)}</td>
+              <td className="p-4 text-right font-mono font-bold text-primary">{formatCurrency(grandTotal)}</td>
             </tr>
           </tbody>
         </table>
