@@ -6,7 +6,7 @@ import TipoPagamentoTab from "@/components/dashboard/TipoPagamentoTab";
 import PosicaoFornecedoresTab from "@/components/dashboard/PosicaoFornecedoresTab";
 import PosicaoClientesTab from "@/components/dashboard/PosicaoClientesTab";
 import { top10Data, custoCentroMEBData, custoCentroMacaeData, tipoPagamentoData, computeS2 } from "@/components/dashboard/data";
-import { fornecedoresData, clientesData } from "@/components/dashboard/agingData";
+import { fornecedoresData, fornecedoresDataS1, clientesData, clientesDataS1 } from "@/components/dashboard/agingData";
 import { PERIODS, type PeriodId } from "@/components/dashboard/shared";
 
 const Index = () => {
@@ -98,11 +98,11 @@ const Index = () => {
           </TabsContent>
 
           <TabsContent value="pos-forn">
-            <PosicaoFornecedoresTab data={fornecedoresData} />
+            <PosicaoFornecedoresTab data={period === "s1" ? fornecedoresDataS1 : fornecedoresData} />
           </TabsContent>
 
           <TabsContent value="pos-cli">
-            <PosicaoClientesTab data={clientesData} />
+            <PosicaoClientesTab data={period === "s1" ? clientesDataS1 : clientesData} />
           </TabsContent>
         </Tabs>
       </main>
