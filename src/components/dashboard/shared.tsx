@@ -45,6 +45,20 @@ export const GROUP_LABELS: Record<string, string> = {
   Outros: "Outros",
 };
 
+// Fixed order for children within MEB groups
+export const MEB_OBRA_ORDER = ["10001","10216","10242","10243","10244","10248","10250","10252","10253","10254","10255","10257","10258","10260"];
+export const MEB_ESTRUTURA_ORDER = ["20001","20002","20003","20004","20005","20006","20008","20009","20010","20012","20013","20015","20017","20020","20021","20022","20023","20024","20029","20030","20031","20032","20033","20099","20100","20102","20104","20107","20108","20109","20111"];
+export const MEB_APOIO_ORDER = ["30001","30002","30003","30099","30258","31001"];
+
+export const MEB_GROUP_ORDER: Record<string, string[]> = {
+  Obra: MEB_OBRA_ORDER,
+  Estrutura: MEB_ESTRUTURA_ORDER,
+  "Unidades de apoio": MEB_APOIO_ORDER,
+};
+
+// Fixed order for Macaé CCs
+export const MACAE_CC_ORDER = ["10232","10241","10251","10255","10256","10259","20001","40001","Outros"];
+
 export const GROUP_COLORS: Record<string, string> = {
   Obra: "hsl(215, 70%, 45%)",
   Estrutura: "hsl(0, 65%, 50%)",
