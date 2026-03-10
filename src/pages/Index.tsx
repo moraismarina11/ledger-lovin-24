@@ -5,6 +5,8 @@ import CustoCentroTab from "@/components/dashboard/CustoCentroTab";
 import TipoPagamentoTab from "@/components/dashboard/TipoPagamentoTab";
 import PosicaoFornecedoresTab from "@/components/dashboard/PosicaoFornecedoresTab";
 import PosicaoClientesTab from "@/components/dashboard/PosicaoClientesTab";
+import AgingFornecedoresTab from "@/components/dashboard/AgingFornecedoresTab";
+import AgingClientesTab from "@/components/dashboard/AgingClientesTab";
 import ResumoTab from "@/components/dashboard/ResumoTab";
 import { top10Data, custoCentroMEBData, custoCentroMacaeData, tipoPagamentoData } from "@/components/dashboard/data";
 import {
@@ -88,6 +90,12 @@ const Index = () => {
             <TabsTrigger value="pos-cli" className="rounded-lg px-5 py-2.5 text-sm font-medium data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               Posição Clientes
             </TabsTrigger>
+            <TabsTrigger value="aging-forn" className="rounded-lg px-5 py-2.5 text-sm font-medium data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              Aging Fornecedores
+            </TabsTrigger>
+            <TabsTrigger value="aging-cli" className="rounded-lg px-5 py-2.5 text-sm font-medium data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              Aging Clientes
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="resumo">
@@ -123,6 +131,14 @@ const Index = () => {
 
           <TabsContent value="pos-cli">
             <PosicaoClientesTab data={getClientesData()} />
+          </TabsContent>
+
+          <TabsContent value="aging-forn">
+            <AgingFornecedoresTab />
+          </TabsContent>
+
+          <TabsContent value="aging-cli">
+            <AgingClientesTab />
           </TabsContent>
         </Tabs>
       </main>
