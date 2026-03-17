@@ -506,7 +506,7 @@ export const clientesDataFev: ClienteCompany[] = [
   },
 ];
 
-// ── Clientes 02/03 a 06/03 = Total Acumulado ──
+// ── Clientes 02/03 a 06/03 ──
 export const clientesDataS4: ClienteCompany[] = [
   {
     company: "MEFB",
@@ -571,6 +571,86 @@ export const clientesDataS4: ClienteCompany[] = [
       { name: "Petrobrás / 232", value: 2373948.55, caucao: 1879.15 },
       { name: "Petrobrás / 241", value: 1135315.68, caucao: 3784496.74 },
       { name: "Petrobrás / 251", value: 525985.31 },
+      { name: "Outros Clientes / Base", value: 313383.05 },
+      { name: "Petrobrás / 259", value: 121908.50, caucao: 305412.66 },
+    ],
+  },
+  {
+    company: "REDUC",
+    color: "hsl(190, 60%, 45%)",
+    aberto: 309615.88,
+    entries: [
+      { name: "PETROLEO BRASILEIRO", value: 229612.06 },
+      { name: "ECBSA UO BC LOTE 3", value: 68824.12 },
+      { name: "MOTA ENGIL ENGENHARIA", value: 11179.70 },
+    ],
+  },
+];
+
+// ── Clientes 09/03 a 13/03 = Latest Snapshot ──
+export const clientesDataS5: ClienteCompany[] = [
+  {
+    company: "MEFB",
+    color: "hsl(150, 60%, 40%)",
+    aberto: 27097858.01,
+    entries: [
+      { name: "BESIX-ECB SPE LTDA", value: 27097858.01 },
+    ],
+  },
+  {
+    company: "Consórcio Alsub",
+    color: "hsl(210, 70%, 50%)",
+    aberto: 84160.00,
+    entries: [
+      { name: "ECOLOGIKA AMBIENTAL TRANSPORTE", value: 84160.00 },
+    ],
+  },
+  {
+    company: "Mota-Engil Brasil",
+    color: "hsl(25, 90%, 55%)",
+    aberto: 139260847.26,
+    caucao: 27305362.22,
+    entries: [
+      { name: "PETROLEO BRASILEIRO S A PETROBRAS", value: 132139387.75, caucao: 7296086.40 },
+      { name: "VALE SA", value: 5866487.61 },
+      { name: "GUARA-NORTE OPERACOES MARITIMAS", value: 549487.21 },
+      { name: "AUTOPISTA FERNAO DIAS S.A", value: 544752.36 },
+      { name: "TUPI NORDESTE OPERACOES MARITIMAS", value: 160732.33 },
+      { name: "CONCESSIONARIA RODOVIAS DO OESTE SP", value: 0, caucao: 20009275.82 },
+    ],
+  },
+  {
+    company: "Tracevia",
+    color: "hsl(270, 50%, 55%)",
+    aberto: 1917821.38,
+    caucao: 45544.32,
+    entries: [
+      { name: "CONC. ROTA DO OESTE S.A.", value: 698797.64 },
+      { name: "VELSIS SIST. E TEC. VIÁRIA", value: 425009.98 },
+      { name: "CONC. RODOVIAS NOROESTE", value: 241215.63, caucao: 2161.61 },
+      { name: "VIABAHIA CONCESSIONÁRIA", value: 218150.48, caucao: 10573.59 },
+      { name: "CONC. ECOVIAS", value: 121539.98 },
+      { name: "LABOR ENG. E TECNOLOGIA", value: 66353.17 },
+      { name: "ECO101 CONC. DE RODOVIAS", value: 51897.79, caucao: 31837.30 },
+      { name: "CONC. RODOVIA NOVA 364", value: 45886.10, caucao: 971.82 },
+      { name: "COLOMBIA ME SAS", value: 24685.88 },
+      { name: "EPR VIA MINEIRA S.A.", value: 8096.49 },
+      { name: "CONC. DAS RODOVIAS", value: 7465.47 },
+      { name: "ECORODOVIAS CONC. E SERVIÇOS", value: 5250.02 },
+      { name: "VIAPAULISTA S.A.", value: 3472.75 },
+    ],
+  },
+  {
+    company: "Macaé",
+    color: "hsl(40, 90%, 50%)",
+    aberto: 69740595.31,
+    caucao: 10740919.21,
+    multa: 6438733.72,
+    entries: [
+      { name: "Petrobrás / 251", value: 53293802.75 },
+      { name: "Petrobrás / 256", value: 14350200.02, caucao: 6649130.66 },
+      { name: "Petrobrás / 232", value: 1135315.68, caucao: 1879.15 },
+      { name: "Petrobrás / 241", value: 525985.31, caucao: 3784496.74 },
       { name: "Outros Clientes / Base", value: 313383.05 },
       { name: "Petrobrás / 259", value: 121908.50, caucao: 305412.66 },
     ],

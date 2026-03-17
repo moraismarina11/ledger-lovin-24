@@ -1,5 +1,36 @@
 import type { CustoCentroEntry, Top10Entry, TipoPagamentoEntry } from "./shared";
 
+// ── Merge helpers ──
+function mergeCCPeriod(period: string, ...sources: CustoCentroEntry[][]): CustoCentroEntry[] {
+  const map = new Map<string, CustoCentroEntry>();
+  for (const src of sources) for (const e of src) {
+    const x = map.get(e.cc);
+    if (x) { x.financiamento += e.financiamento; x.fornecedor += e.fornecedor; x.imposto += e.imposto; x.outrosCustos += e.outrosCustos; x.outrosRecebimentos += e.outrosRecebimentos; x.recCliente += e.recCliente; x.salarios += e.salarios; x.total += e.total; }
+    else map.set(e.cc, { ...e, period });
+  }
+  return Array.from(map.values());
+}
+
+function mergeTop10Period(period: string, ...sources: Top10Entry[][]): Top10Entry[] {
+  const map = new Map<string, Top10Entry>();
+  for (const src of sources) for (const e of src) {
+    const x = map.get(e.supplier);
+    if (x) { x.macae += e.macae; x.meb += e.meb; x.total += e.total; }
+    else map.set(e.supplier, { ...e, period });
+  }
+  return Array.from(map.values()).sort((a, b) => a.total - b.total).slice(0, 10);
+}
+
+function mergeTipoPeriod(period: string, ...sources: TipoPagamentoEntry[][]): TipoPagamentoEntry[] {
+  const map = new Map<string, TipoPagamentoEntry>();
+  for (const src of sources) for (const e of src) {
+    const x = map.get(e.company);
+    if (x) { x.financiamento += e.financiamento; x.fornecedor += e.fornecedor; x.imposto += e.imposto; x.outrosCustos += e.outrosCustos; x.outrosRecebimentos += e.outrosRecebimentos; x.recCliente += e.recCliente; x.salarios += e.salarios; x.total += e.total; }
+    else map.set(e.company, { ...e, period });
+  }
+  return Array.from(map.values());
+}
+
 // ── Top 10 Pagamento de Fornecedor ─────────────────────────────────
 
 // Janeiro
@@ -44,21 +75,38 @@ const top10S4: Top10Entry[] = [
   { supplier: "KROMINOX ACOS E META", macae: -169494.20, meb: 0, total: -169494.20, period: "s4" },
 ];
 
+// Semana 09/03 a 13/03
+const top10S5: Top10Entry[] = [
+  { supplier: "PRINER LOCACAO DE EQ", macae: -1024516.77, meb: 0, total: -1024516.77, period: "s5" },
+  { supplier: "VIFERRO", macae: -592387.82, meb: 0, total: -592387.82, period: "s5" },
+  { supplier: "CALDEX", macae: -445482.45, meb: 0, total: -445482.45, period: "s5" },
+  { supplier: "CAIXA DE PREVIDENCIA DOS FUNCIONARI", macae: 0, meb: -233258.48, total: -233258.48, period: "s5" },
+  { supplier: "RAC SOLUCOES", macae: -205350, meb: 0, total: -205350, period: "s5" },
+  { supplier: "JCR COMERCIO, SERVIC", macae: -155450.50, meb: 0, total: -155450.50, period: "s5" },
+  { supplier: "JOTUN BRASIL", macae: -133641.03, meb: 0, total: -133641.03, period: "s5" },
+  { supplier: "VOGEL SOLUCOES EM TELECOM E INF LTD", macae: 0, meb: -123571.21, total: -123571.21, period: "s5" },
+  { supplier: "SLTK MANUTENCOES E L", macae: -120038, meb: 0, total: -120038, period: "s5" },
+  { supplier: "DELL COMPUTADORES DO BRASIL LTDA", macae: 0, meb: -100424.45, total: -100424.45, period: "s5" },
+];
+
+// Março = S4 + S5
+const top10Mar = mergeTop10Period("mar", top10S4, top10S5);
+
 // Total Acumulado
 const top10Total: Top10Entry[] = [
-  { supplier: "FLOW LATINO AMERICAN", macae: -1853699.08, meb: 0, total: -1853699.08, period: "total" },
-  { supplier: "PRINER LOCACAO DE EQ", macae: -1843033.42, meb: 0, total: -1843033.42, period: "total" },
+  { supplier: "PRINER LOCACAO DE EQ", macae: -2867550.19, meb: 0, total: -2867550.19, period: "total" },
+  { supplier: "FLOW LATINO AMERICAN", macae: -1883304.81, meb: 0, total: -1883304.81, period: "total" },
   { supplier: "MAAC TRAVEL CORPORATE LTDA", macae: 0, meb: -1645618.81, total: -1645618.81, period: "total" },
-  { supplier: "FLP TRANSPORTES DE M", macae: -1578667.27, meb: 0, total: -1578667.27, period: "total" },
+  { supplier: "FLP TRANSPORTES DE M", macae: -1581195.16, meb: 0, total: -1581195.16, period: "total" },
   { supplier: "KROMINOX ACOS E META", macae: -1489723.73, meb: 0, total: -1489723.73, period: "total" },
-  { supplier: "JOTUN BRASIL", macae: -1260520.34, meb: 0, total: -1260520.34, period: "total" },
-  { supplier: "FLOW LATINO", macae: -1150000.00, meb: 0, total: -1150000.00, period: "total" },
-  { supplier: "UPSTAR AVIATION", macae: 0, meb: -931000.00, total: -931000.00, period: "total" },
+  { supplier: "JOTUN BRASIL", macae: -1394161.37, meb: 0, total: -1394161.37, period: "total" },
+  { supplier: "FLOW LATINO", macae: -1150000, meb: 0, total: -1150000, period: "total" },
+  { supplier: "UPSTAR AVIATION", macae: 0, meb: -931000, total: -931000, period: "total" },
   { supplier: "CISARENTAL ADMINISTR", macae: -907595.88, meb: 0, total: -907595.88, period: "total" },
   { supplier: "ALMEQ SERVICOS TECNI", macae: -846618.06, meb: 0, total: -846618.06, period: "total" },
 ];
 
-export const top10Data: Top10Entry[] = [...top10Jan, ...top10Fev, ...top10S4, ...top10Total];
+export const top10Data: Top10Entry[] = [...top10Jan, ...top10Fev, ...top10S4, ...top10S5, ...top10Mar, ...top10Total];
 
 // ── CC Mota Engil Brasil ───────────────────────────────────────────
 
@@ -215,65 +263,56 @@ const ccMEBS4: CustoCentroEntry[] = [
   { cc: "Outros", financiamento: 0, fornecedor: -96682919.56, imposto: 0, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -96682919.56, period: "s4" },
 ];
 
-// Total Acumulado
-const ccMEBTotal: CustoCentroEntry[] = [
-  { cc: "10001", financiamento: 0, fornecedor: -644977.01, imposto: -6792.89, outrosCustos: -580613.90, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -1232383.80, period: "total" },
-  { cc: "10216", financiamento: 0, fornecedor: -15441.65, imposto: 0, outrosCustos: 0, outrosRecebimentos: 23264.29, recCliente: 0, salarios: 0, total: 7822.64, period: "total" },
-  { cc: "10242", financiamento: 0, fornecedor: -85872.81, imposto: 0, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -85872.81, period: "total" },
-  { cc: "10243", financiamento: 0, fornecedor: -45751971.59, imposto: 0, outrosCustos: -3070.06, outrosRecebimentos: 0, recCliente: 23523987.99, salarios: 0, total: -22231053.66, period: "total" },
-  { cc: "10244", financiamento: 0, fornecedor: 0, imposto: 0, outrosCustos: -1298.60, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -1298.60, period: "total" },
-  { cc: "10248", financiamento: 0, fornecedor: -56306.10, imposto: -10328.67, outrosCustos: -237500.89, outrosRecebimentos: 7323.50, recCliente: 0, salarios: -15923.10, total: -312735.26, period: "total" },
-  { cc: "10250", financiamento: 0, fornecedor: 0, imposto: 0, outrosCustos: -4622.33, outrosRecebimentos: 0, recCliente: 0, salarios: -1904.00, total: -6526.33, period: "total" },
-  { cc: "10252", financiamento: 0, fornecedor: -4624.00, imposto: 0, outrosCustos: -271.48, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -4895.48, period: "total" },
-  { cc: "10253", financiamento: 0, fornecedor: -101947.22, imposto: 0, outrosCustos: -1160.07, outrosRecebimentos: 0, recCliente: 354922.51, salarios: 0, total: 251815.22, period: "total" },
-  { cc: "10254", financiamento: 0, fornecedor: -12831.11, imposto: 0, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -12831.11, period: "total" },
-  { cc: "10255", financiamento: 0, fornecedor: 0, imposto: 0, outrosCustos: -24.23, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -24.23, period: "total" },
-  { cc: "10257", financiamento: 0, fornecedor: -471121.26, imposto: -5943.07, outrosCustos: -51934.35, outrosRecebimentos: 0, recCliente: 148888743.88, salarios: -193979.21, total: 148165765.99, period: "total" },
-  { cc: "10258", financiamento: 0, fornecedor: -4167537.26, imposto: -543786.90, outrosCustos: -538634.78, outrosRecebimentos: 3372.45, recCliente: 9889988.56, salarios: -3334665.10, total: 1308736.97, period: "total" },
-  { cc: "10260", financiamento: 0, fornecedor: -4739.87, imposto: -48368.29, outrosCustos: -169220.52, outrosRecebimentos: 0, recCliente: 12178721.47, salarios: -1162145.87, total: 10794246.92, period: "total" },
-  { cc: "20001", financiamento: 0, fornecedor: -1485611.46, imposto: -544.15, outrosCustos: -271729.70, outrosRecebimentos: 0, recCliente: 0, salarios: -1119274.15, total: -2877159.46, period: "total" },
-  { cc: "20002", financiamento: 0, fornecedor: -305298.60, imposto: -10755.57, outrosCustos: -36499.80, outrosRecebimentos: 0, recCliente: 0, salarios: -284002.86, total: -636556.83, period: "total" },
-  { cc: "20003", financiamento: 0, fornecedor: -6986.68, imposto: -6089.51, outrosCustos: -37952.98, outrosRecebimentos: 0, recCliente: 0, salarios: -147401.53, total: -198430.70, period: "total" },
-  { cc: "20004", financiamento: 0, fornecedor: -851266.80, imposto: -20919.04, outrosCustos: -99531.66, outrosRecebimentos: 0, recCliente: 0, salarios: -517731.70, total: -1489449.20, period: "total" },
-  { cc: "20005", financiamento: 0, fornecedor: -38776.07, imposto: -12994.21, outrosCustos: -61229.27, outrosRecebimentos: 0, recCliente: 0, salarios: -287628.52, total: -400628.07, period: "total" },
-  { cc: "20006", financiamento: 0, fornecedor: -5867.24, imposto: -5953.97, outrosCustos: -9112.86, outrosRecebimentos: 0, recCliente: 0, salarios: -143060.24, total: -163994.31, period: "total" },
-  { cc: "20008", financiamento: 0, fornecedor: -1082051.87, imposto: -10067.57, outrosCustos: -28400.03, outrosRecebimentos: 0, recCliente: 0, salarios: -131119.97, total: -1251639.44, period: "total" },
-  { cc: "20009", financiamento: 0, fornecedor: -11748.24, imposto: -5492.66, outrosCustos: -34755.81, outrosRecebimentos: 3840.02, recCliente: 0, salarios: -166912.66, total: -215069.35, period: "total" },
-  { cc: "20010", financiamento: 0, fornecedor: -304225.87, imposto: -5924.66, outrosCustos: -20397.63, outrosRecebimentos: 4113.91, recCliente: 0, salarios: -166296.21, total: -492730.46, period: "total" },
-  { cc: "20012", financiamento: 0, fornecedor: 0, imposto: 0, outrosCustos: -1159.50, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -1159.50, period: "total" },
-  { cc: "20013", financiamento: 0, fornecedor: -5700.96, imposto: -2793.79, outrosCustos: -5704.73, outrosRecebimentos: 0, recCliente: 0, salarios: -65719.02, total: -79918.50, period: "total" },
-  { cc: "20015", financiamento: 0, fornecedor: -2310.00, imposto: -951.43, outrosCustos: -4169.22, outrosRecebimentos: 0, recCliente: 0, salarios: -77626.89, total: -85057.54, period: "total" },
-  { cc: "20017", financiamento: 0, fornecedor: 0, imposto: -1284.80, outrosCustos: -8780.33, outrosRecebimentos: 0, recCliente: 0, salarios: -47193.56, total: -57258.69, period: "total" },
-  { cc: "20020", financiamento: 0, fornecedor: -249549.08, imposto: -30401.72, outrosCustos: -3664.56, outrosRecebimentos: 0, recCliente: 0, salarios: -150838.85, total: -434454.21, period: "total" },
-  { cc: "20021", financiamento: 0, fornecedor: -121918.60, imposto: -1883.20, outrosCustos: -30277.66, outrosRecebimentos: 0, recCliente: 0, salarios: -119900.34, total: -273979.80, period: "total" },
-  { cc: "20022", financiamento: 0, fornecedor: -132053.40, imposto: 0, outrosCustos: -6102.33, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -138155.73, period: "total" },
-  { cc: "20023", financiamento: 0, fornecedor: -555264.06, imposto: -18318.88, outrosCustos: -33907.68, outrosRecebimentos: 0, recCliente: 0, salarios: -208129.45, total: -815620.07, period: "total" },
-  { cc: "20024", financiamento: 0, fornecedor: -5501.97, imposto: -4735.53, outrosCustos: -8631.27, outrosRecebimentos: 2198.93, recCliente: 0, salarios: -159007.37, total: -175677.21, period: "total" },
-  { cc: "20029", financiamento: 0, fornecedor: -337017.20, imposto: -78491.24, outrosCustos: -44446.57, outrosRecebimentos: 854.36, recCliente: 0, salarios: -33724.67, total: -492825.32, period: "total" },
-  { cc: "20030", financiamento: 0, fornecedor: -2547065.99, imposto: -97561.57, outrosCustos: -49772.93, outrosRecebimentos: 0, recCliente: 0, salarios: -80741.51, total: -2775142.00, period: "total" },
-  { cc: "20031", financiamento: 0, fornecedor: -317898.00, imposto: 0, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -317898.00, period: "total" },
-  { cc: "20032", financiamento: 0, fornecedor: -30953.13, imposto: 0, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -30953.13, period: "total" },
-  { cc: "20033", financiamento: 0, fornecedor: -1010.49, imposto: 0, outrosCustos: -327.76, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -1338.25, period: "total" },
-  { cc: "20099", financiamento: 0, fornecedor: -501582.32, imposto: -36178.90, outrosCustos: -199233.03, outrosRecebimentos: 956.62, recCliente: 0, salarios: -65349.59, total: -801387.22, period: "total" },
-  { cc: "20100", financiamento: 0, fornecedor: 0, imposto: -245.20, outrosCustos: -8627.16, outrosRecebimentos: 0, recCliente: 0, salarios: -10611.23, total: -19483.59, period: "total" },
-  { cc: "20102", financiamento: 0, fornecedor: 0, imposto: 0, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: -9417.00, total: -9417.00, period: "total" },
-  { cc: "20104", financiamento: 0, fornecedor: -1977058.01, imposto: -77046.00, outrosCustos: -44782.94, outrosRecebimentos: 0, recCliente: 0, salarios: -362987.21, total: -2461874.16, period: "total" },
-  { cc: "20107", financiamento: 0, fornecedor: 0, imposto: -8680.08, outrosCustos: -7765.20, outrosRecebimentos: 0, recCliente: 0, salarios: -87574.27, total: -104019.55, period: "total" },
-  { cc: "20108", financiamento: 0, fornecedor: -52654.15, imposto: -17946.26, outrosCustos: -81696.46, outrosRecebimentos: 0, recCliente: 0, salarios: -461062.61, total: -613359.48, period: "total" },
-  { cc: "20109", financiamento: 0, fornecedor: 0, imposto: 0, outrosCustos: -6014.90, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -6014.90, period: "total" },
-  { cc: "20111", financiamento: 0, fornecedor: 0, imposto: -2282.26, outrosCustos: -60694.53, outrosRecebimentos: 0, recCliente: 0, salarios: -86665.91, total: -149642.70, period: "total" },
-  { cc: "20112", financiamento: 0, fornecedor: 0, imposto: 0, outrosCustos: -1460.00, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -1460.00, period: "total" },
-  { cc: "30001", financiamento: 0, fornecedor: -90502.12, imposto: -17446.42, outrosCustos: -63630.78, outrosRecebimentos: 1595.00, recCliente: 0, salarios: -331049.48, total: -501033.80, period: "total" },
-  { cc: "30002", financiamento: -1948552.13, fornecedor: -769181.86, imposto: -139345.38, outrosCustos: -262134.88, outrosRecebimentos: 0, recCliente: 0, salarios: -186639.71, total: -3305853.96, period: "total" },
-  { cc: "30003", financiamento: 0, fornecedor: -595553.74, imposto: -6378.95, outrosCustos: -78144.96, outrosRecebimentos: 400.00, recCliente: 0, salarios: -169026.24, total: -848703.89, period: "total" },
-  { cc: "30099", financiamento: 0, fornecedor: -170151.21, imposto: -381.48, outrosCustos: -46873.55, outrosRecebimentos: 0, recCliente: 0, salarios: -12752.56, total: -230158.80, period: "total" },
-  { cc: "30258", financiamento: 0, fornecedor: -1265.20, imposto: -15772.60, outrosCustos: -20018.58, outrosRecebimentos: 0, recCliente: 0, salarios: -291315.46, total: -328371.84, period: "total" },
-  { cc: "31001", financiamento: 0, fornecedor: -8056.49, imposto: -4410.54, outrosCustos: -27008.50, outrosRecebimentos: 220.34, recCliente: 0, salarios: -62257.23, total: -101512.42, period: "total" },
-  { cc: "40001", financiamento: 122881387.68, fornecedor: -374179.37, imposto: -1244524.29, outrosCustos: -87077.11, outrosRecebimentos: 2239456.96, recCliente: 0, salarios: -374707.16, total: 123040356.72, period: "total" },
-  { cc: "Outros", financiamento: 0, fornecedor: -117019883.52, imposto: -2132484.82, outrosCustos: -17389.53, outrosRecebimentos: 14287374.11, recCliente: 0, salarios: 0, total: -104882383.76, period: "total" },
+// Semana 09/03 a 13/03
+const ccMEBS5: CustoCentroEntry[] = [
+  { cc: "10001", financiamento: 0, fornecedor: -10000, imposto: 0, outrosCustos: -21978.10, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -31978.10, period: "s5" },
+  { cc: "10243", financiamento: 0, fornecedor: -129.13, imposto: -549635, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -549764.13, period: "s5" },
+  { cc: "10248", financiamento: 0, fornecedor: -33621.85, imposto: -195209.71, outrosCustos: -29127.67, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -257959.23, period: "s5" },
+  { cc: "10249", financiamento: 0, fornecedor: 0, imposto: -111.26, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -111.26, period: "s5" },
+  { cc: "10251", financiamento: 0, fornecedor: -36.84, imposto: 0, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -36.84, period: "s5" },
+  { cc: "10253", financiamento: 0, fornecedor: -72170, imposto: 0, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -72170, period: "s5" },
+  { cc: "10255", financiamento: 0, fornecedor: -35.29, imposto: 0, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -35.29, period: "s5" },
+  { cc: "10257", financiamento: 0, fornecedor: -90705.80, imposto: -2250, outrosCustos: -3270.01, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -96225.81, period: "s5" },
+  { cc: "10258", financiamento: 0, fornecedor: -55070.25, imposto: -16669.12, outrosCustos: -2492.05, outrosRecebimentos: 999, recCliente: 0, salarios: -14413.17, total: -87645.59, period: "s5" },
+  { cc: "10260", financiamento: 0, fornecedor: 0, imposto: 0, outrosCustos: -1000.83, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -1000.83, period: "s5" },
+  { cc: "10265", financiamento: 0, fornecedor: -27.67, imposto: 0, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -27.67, period: "s5" },
+  { cc: "20001", financiamento: 0, fornecedor: -16832.73, imposto: -457.59, outrosCustos: -7186.26, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -24476.58, period: "s5" },
+  { cc: "20002", financiamento: 0, fornecedor: -3519.37, imposto: -4980.24, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: -3902.02, total: -12401.63, period: "s5" },
+  { cc: "20003", financiamento: 0, fornecedor: -513.77, imposto: 0, outrosCustos: -7117.93, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -7631.70, period: "s5" },
+  { cc: "20004", financiamento: 0, fornecedor: -45053.41, imposto: -3.95, outrosCustos: -8769.75, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -53827.11, period: "s5" },
+  { cc: "20005", financiamento: 0, fornecedor: -1245.18, imposto: 0, outrosCustos: -357.30, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -1602.48, period: "s5" },
+  { cc: "20008", financiamento: -1054.90, fornecedor: -251072.97, imposto: -10267.09, outrosCustos: -57.39, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -262452.35, period: "s5" },
+  { cc: "20009", financiamento: 0, fornecedor: -698.70, imposto: 0, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -698.70, period: "s5" },
+  { cc: "20010", financiamento: 0, fornecedor: -2723.71, imposto: 0, outrosCustos: -2060.29, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -4784.00, period: "s5" },
+  { cc: "20012", financiamento: 0, fornecedor: 0, imposto: 0, outrosCustos: -777.84, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -777.84, period: "s5" },
+  { cc: "20013", financiamento: 0, fornecedor: -2850.48, imposto: 0, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -2850.48, period: "s5" },
+  { cc: "20020", financiamento: 0, fornecedor: -8350, imposto: 0, outrosCustos: -100807.76, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -109157.76, period: "s5" },
+  { cc: "20021", financiamento: 0, fornecedor: -8527.67, imposto: 0, outrosCustos: -436, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -8963.67, period: "s5" },
+  { cc: "20022", financiamento: 0, fornecedor: 0, imposto: -3125, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -3125, period: "s5" },
+  { cc: "20023", financiamento: 0, fornecedor: -38130.88, imposto: -9179.07, outrosCustos: -1803.60, outrosRecebimentos: 0, recCliente: 0, salarios: -3604.58, total: -52718.13, period: "s5" },
+  { cc: "20024", financiamento: 0, fornecedor: -4416.93, imposto: 0, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -4416.93, period: "s5" },
+  { cc: "20029", financiamento: 0, fornecedor: -8321.67, imposto: 0, outrosCustos: -4339.46, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -12661.13, period: "s5" },
+  { cc: "20030", financiamento: 0, fornecedor: -31646.78, imposto: -42703.19, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -74349.97, period: "s5" },
+  { cc: "20099", financiamento: 0, fornecedor: -13993.72, imposto: -401.43, outrosCustos: -974.24, outrosRecebimentos: 0, recCliente: 0, salarios: -3936.42, total: -19305.81, period: "s5" },
+  { cc: "20104", financiamento: 0, fornecedor: -248852.85, imposto: -121.58, outrosCustos: -338.80, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -249313.23, period: "s5" },
+  { cc: "20108", financiamento: 0, fornecedor: -588.53, imposto: 0, outrosCustos: -391.02, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -979.55, period: "s5" },
+  { cc: "30001", financiamento: 0, fornecedor: 0, imposto: -1.59, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -1.59, period: "s5" },
+  { cc: "30002", financiamento: 0, fornecedor: -228352.87, imposto: 0, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: -9213.94, total: -237566.81, period: "s5" },
+  { cc: "30003", financiamento: 0, fornecedor: 0, imposto: 0, outrosCustos: 0, outrosRecebimentos: 190, recCliente: 0, salarios: 0, total: 190, period: "s5" },
+  { cc: "30099", financiamento: 0, fornecedor: -13836.61, imposto: -1978.60, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -15815.21, period: "s5" },
+  { cc: "31001", financiamento: 0, fornecedor: -1538.92, imposto: -215.52, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -1754.44, period: "s5" },
+  { cc: "40001", financiamento: -505263.30, fornecedor: -547.50, imposto: -41523.80, outrosCustos: -16685.91, outrosRecebimentos: 353092.54, recCliente: 0, salarios: 0, total: -210927.97, period: "s5" },
+  { cc: "40004", financiamento: 0, fornecedor: 0, imposto: -1314.43, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -1314.43, period: "s5" },
+  { cc: "Outros", financiamento: 0, fornecedor: -3700410.14, imposto: 0, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -3700410.14, period: "s5" },
 ];
 
-export const custoCentroMEBData: CustoCentroEntry[] = [...ccMEBJan, ...ccMEBFev, ...ccMEBS4, ...ccMEBTotal];
+// Março = S4 + S5
+const ccMEBMar = mergeCCPeriod("mar", ccMEBS4, ccMEBS5);
+
+// Total Acumulado = Jan + Fev + Março
+const ccMEBTotal = mergeCCPeriod("total", ccMEBJan, ccMEBFev, ccMEBMar);
+
+export const custoCentroMEBData: CustoCentroEntry[] = [...ccMEBJan, ...ccMEBFev, ...ccMEBS4, ...ccMEBS5, ...ccMEBMar, ...ccMEBTotal];
 
 // ── CC Macaé ───────────────────────────────────────────────────────
 
@@ -313,21 +352,25 @@ const ccMacaeS4: CustoCentroEntry[] = [
   { cc: "40001", financiamento: -65974.94, fornecedor: 0, imposto: 0, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -65974.94, period: "s4" },
 ];
 
-// Total Acumulado
-const ccMacaeTotal: CustoCentroEntry[] = [
-  { cc: "10232", financiamento: 0, fornecedor: 0, imposto: 0, outrosCustos: -116558.62, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -116558.62, period: "total" },
-  { cc: "10234", financiamento: 0, fornecedor: -542895.24, imposto: 0, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -542895.24, period: "total" },
-  { cc: "10241", financiamento: 0, fornecedor: -153129.54, imposto: 0, outrosCustos: -1000.00, outrosRecebimentos: 0, recCliente: 11531852.83, salarios: 0, total: 11377723.29, period: "total" },
-  { cc: "10251", financiamento: 0, fornecedor: -9769042.99, imposto: -85747.27, outrosCustos: -4171990.11, outrosRecebimentos: 0, recCliente: 14801531.37, salarios: -15411398.44, total: -14636647.44, period: "total" },
-  { cc: "10255", financiamento: 0, fornecedor: 0, imposto: 0, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: -19587.00, total: -19587.00, period: "total" },
-  { cc: "10256", financiamento: 0, fornecedor: -9053404.55, imposto: -6515.20, outrosCustos: -4183401.31, outrosRecebimentos: 0, recCliente: 30129119.03, salarios: -14400664.97, total: 2485133.00, period: "total" },
-  { cc: "10259", financiamento: 0, fornecedor: -2304816.08, imposto: 0, outrosCustos: -451517.60, outrosRecebimentos: 0, recCliente: 4272430.86, salarios: -1535372.89, total: -19275.71, period: "total" },
-  { cc: "20001", financiamento: -1103846.72, fornecedor: -3936298.58, imposto: -1354053.24, outrosCustos: -373139.44, outrosRecebimentos: 32710.40, recCliente: 0, salarios: -811411.58, total: -7546039.16, period: "total" },
-  { cc: "40001", financiamento: -110026.30, fornecedor: 0, imposto: 0, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -110026.30, period: "total" },
-  { cc: "Outros", financiamento: -7569361.10, fornecedor: -1150000.00, imposto: -8319592.98, outrosCustos: -853266.99, outrosRecebimentos: 88227.83, recCliente: 0, salarios: -12616.19, total: -17816609.43, period: "total" },
+// Semana 09/03 a 13/03
+const ccMacaeS5: CustoCentroEntry[] = [
+  { cc: "10216", financiamento: 0, fornecedor: 0, imposto: 0, outrosCustos: 0, outrosRecebimentos: 35000, recCliente: 0, salarios: 0, total: 35000, period: "s5" },
+  { cc: "10232", financiamento: 0, fornecedor: 0, imposto: 0, outrosCustos: -8279.31, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -8279.31, period: "s5" },
+  { cc: "10241", financiamento: 0, fornecedor: -490838.98, imposto: 0, outrosCustos: -10079.97, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -500918.95, period: "s5" },
+  { cc: "10251", financiamento: 0, fornecedor: -1326322.02, imposto: -1137.06, outrosCustos: -28541.46, outrosRecebimentos: 0, recCliente: 287444.89, salarios: -37155.40, total: -1105711.05, period: "s5" },
+  { cc: "10256", financiamento: 0, fornecedor: -820957.81, imposto: -513376.29, outrosCustos: -32538.18, outrosRecebimentos: 0, recCliente: 399568.01, salarios: -11163.02, total: -978467.29, period: "s5" },
+  { cc: "10259", financiamento: 0, fornecedor: -1196911.68, imposto: 0, outrosCustos: -5852.17, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -1202763.85, period: "s5" },
+  { cc: "20001", financiamento: 0, fornecedor: -236718.08, imposto: -79834.19, outrosCustos: -7003.88, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -323556.15, period: "s5" },
+  { cc: "40001", financiamento: -44051.36, fornecedor: 0, imposto: 0, outrosCustos: -636, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -44687.36, period: "s5" },
 ];
 
-export const custoCentroMacaeData: CustoCentroEntry[] = [...ccMacaeJan, ...ccMacaeFev, ...ccMacaeS4, ...ccMacaeTotal];
+// Março = S4 + S5
+const ccMacaeMar = mergeCCPeriod("mar", ccMacaeS4, ccMacaeS5);
+
+// Total Acumulado = Jan + Fev + Março
+const ccMacaeTotal = mergeCCPeriod("total", ccMacaeJan, ccMacaeFev, ccMacaeMar);
+
+export const custoCentroMacaeData: CustoCentroEntry[] = [...ccMacaeJan, ...ccMacaeFev, ...ccMacaeS4, ...ccMacaeS5, ...ccMacaeMar, ...ccMacaeTotal];
 
 // ── Tipo de Pagamento/Recebimento por Empresa ──────────────────────
 
@@ -349,10 +392,16 @@ const tipoS4: TipoPagamentoEntry[] = [
   { company: "Mota Engil Brasil", financiamento: -4559541.73, fornecedor: -104332160.54, imposto: -518079.01, outrosCustos: -327246.22, outrosRecebimentos: 543520.61, recCliente: 15957612.52, salarios: -2844487.49, total: -96080381.86, period: "s4" },
 ];
 
-// Total Acumulado
-const tipoTotal: TipoPagamentoEntry[] = [
-  { company: "Macaé", financiamento: -8783234.12, fornecedor: -26909586.98, imposto: -9765908.69, outrosCustos: -10150874.07, outrosRecebimentos: 120938.23, recCliente: 60734934.09, salarios: -32191051.07, total: -26944782.61, period: "total" },
-  { company: "Mota Engil Brasil", financiamento: 120932835.55, fornecedor: -181275513.58, imposto: -5088955.17, outrosCustos: -3397457.61, outrosRecebimentos: 16574970.49, recCliente: 194836364.41, salarios: -10670893.77, total: 131911350.33, period: "total" },
+// Semana 09/03 a 13/03
+const tipoS5: TipoPagamentoEntry[] = [
+  { company: "Macaé", financiamento: -44051.36, fornecedor: -4071748.57, imposto: -594347.54, outrosCustos: -92930.97, outrosRecebimentos: 35000, recCliente: 687012.90, salarios: -48318.42, total: -4129383.96, period: "s5" },
+  { company: "Mota Engil Brasil", financiamento: -506318.20, fornecedor: -4893822.22, imposto: -880148.17, outrosCustos: -209972.21, outrosRecebimentos: 354281.54, recCliente: 0, salarios: -35070.13, total: -6171049.39, period: "s5" },
 ];
 
-export const tipoPagamentoData: TipoPagamentoEntry[] = [...tipoJan, ...tipoFev, ...tipoS4, ...tipoTotal];
+// Março = S4 + S5
+const tipoMar = mergeTipoPeriod("mar", tipoS4, tipoS5);
+
+// Total Acumulado = Jan + Fev + Março
+const tipoTotal = mergeTipoPeriod("total", tipoJan, tipoFev, tipoMar);
+
+export const tipoPagamentoData: TipoPagamentoEntry[] = [...tipoJan, ...tipoFev, ...tipoS4, ...tipoS5, ...tipoMar, ...tipoTotal];

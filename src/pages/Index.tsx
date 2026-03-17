@@ -10,8 +10,8 @@ import AgingClientesTab from "@/components/dashboard/AgingClientesTab";
 import ResumoTab from "@/components/dashboard/ResumoTab";
 import { top10Data, custoCentroMEBData, custoCentroMacaeData, tipoPagamentoData } from "@/components/dashboard/data";
 import {
-  fornecedoresDataJan, fornecedoresDataFev, fornecedoresDataS4,
-  clientesDataJan, clientesDataFev, clientesDataS4,
+  fornecedoresDataJan, fornecedoresDataFev, fornecedoresDataS4, fornecedoresDataS5,
+  clientesDataJan, clientesDataFev, clientesDataS4, clientesDataS5,
 } from "@/components/dashboard/agingData";
 import { PERIODS, type PeriodId } from "@/components/dashboard/shared";
 
@@ -25,13 +25,15 @@ const Index = () => {
   const getFornecedoresData = () => {
     if (period === "jan") return fornecedoresDataJan;
     if (period === "fev") return fornecedoresDataFev;
-    return fornecedoresDataS4; // s4 and total use latest snapshot
+    if (period === "s4") return fornecedoresDataS4;
+    return fornecedoresDataS5; // s5, mar, total use latest snapshot
   };
 
   const getClientesData = () => {
     if (period === "jan") return clientesDataJan;
     if (period === "fev") return clientesDataFev;
-    return clientesDataS4;
+    if (period === "s4") return clientesDataS4;
+    return clientesDataS5;
   };
 
   return (
