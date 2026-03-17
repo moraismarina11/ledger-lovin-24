@@ -392,10 +392,16 @@ const tipoS4: TipoPagamentoEntry[] = [
   { company: "Mota Engil Brasil", financiamento: -4559541.73, fornecedor: -104332160.54, imposto: -518079.01, outrosCustos: -327246.22, outrosRecebimentos: 543520.61, recCliente: 15957612.52, salarios: -2844487.49, total: -96080381.86, period: "s4" },
 ];
 
-// Total Acumulado
-const tipoTotal: TipoPagamentoEntry[] = [
-  { company: "Macaé", financiamento: -8783234.12, fornecedor: -26909586.98, imposto: -9765908.69, outrosCustos: -10150874.07, outrosRecebimentos: 120938.23, recCliente: 60734934.09, salarios: -32191051.07, total: -26944782.61, period: "total" },
-  { company: "Mota Engil Brasil", financiamento: 120932835.55, fornecedor: -181275513.58, imposto: -5088955.17, outrosCustos: -3397457.61, outrosRecebimentos: 16574970.49, recCliente: 194836364.41, salarios: -10670893.77, total: 131911350.33, period: "total" },
+// Semana 09/03 a 13/03
+const tipoS5: TipoPagamentoEntry[] = [
+  { company: "Macaé", financiamento: -44051.36, fornecedor: -4071748.57, imposto: -594347.54, outrosCustos: -92930.97, outrosRecebimentos: 35000, recCliente: 687012.90, salarios: -48318.42, total: -4129383.96, period: "s5" },
+  { company: "Mota Engil Brasil", financiamento: -506318.20, fornecedor: -4893822.22, imposto: -880148.17, outrosCustos: -209972.21, outrosRecebimentos: 354281.54, recCliente: 0, salarios: -35070.13, total: -6171049.39, period: "s5" },
 ];
 
-export const tipoPagamentoData: TipoPagamentoEntry[] = [...tipoJan, ...tipoFev, ...tipoS4, ...tipoTotal];
+// Março = S4 + S5
+const tipoMar = mergeTipoPeriod("mar", tipoS4, tipoS5);
+
+// Total Acumulado = Jan + Fev + Março
+const tipoTotal = mergeTipoPeriod("total", tipoJan, tipoFev, tipoMar);
+
+export const tipoPagamentoData: TipoPagamentoEntry[] = [...tipoJan, ...tipoFev, ...tipoS4, ...tipoS5, ...tipoMar, ...tipoTotal];

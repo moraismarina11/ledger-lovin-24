@@ -25,13 +25,15 @@ const Index = () => {
   const getFornecedoresData = () => {
     if (period === "jan") return fornecedoresDataJan;
     if (period === "fev") return fornecedoresDataFev;
-    return fornecedoresDataS4; // s4 and total use latest snapshot
+    if (period === "s4") return fornecedoresDataS4;
+    return fornecedoresDataS5; // s5, mar, total use latest snapshot
   };
 
   const getClientesData = () => {
     if (period === "jan") return clientesDataJan;
     if (period === "fev") return clientesDataFev;
-    return clientesDataS4;
+    if (period === "s4") return clientesDataS4;
+    return clientesDataS5;
   };
 
   return (

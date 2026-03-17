@@ -32,6 +32,8 @@ export const PERIODS = [
   { id: "jan", label: "Janeiro" },
   { id: "fev", label: "Fevereiro" },
   { id: "s4", label: "02/03 a 06/03" },
+  { id: "s5", label: "09/03 a 13/03" },
+  { id: "mar", label: "Março" },
   { id: "total", label: "Total Acumulado" },
 ] as const;
 
