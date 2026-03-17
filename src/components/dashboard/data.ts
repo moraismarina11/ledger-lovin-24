@@ -352,21 +352,25 @@ const ccMacaeS4: CustoCentroEntry[] = [
   { cc: "40001", financiamento: -65974.94, fornecedor: 0, imposto: 0, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -65974.94, period: "s4" },
 ];
 
-// Total Acumulado
-const ccMacaeTotal: CustoCentroEntry[] = [
-  { cc: "10232", financiamento: 0, fornecedor: 0, imposto: 0, outrosCustos: -116558.62, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -116558.62, period: "total" },
-  { cc: "10234", financiamento: 0, fornecedor: -542895.24, imposto: 0, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -542895.24, period: "total" },
-  { cc: "10241", financiamento: 0, fornecedor: -153129.54, imposto: 0, outrosCustos: -1000.00, outrosRecebimentos: 0, recCliente: 11531852.83, salarios: 0, total: 11377723.29, period: "total" },
-  { cc: "10251", financiamento: 0, fornecedor: -9769042.99, imposto: -85747.27, outrosCustos: -4171990.11, outrosRecebimentos: 0, recCliente: 14801531.37, salarios: -15411398.44, total: -14636647.44, period: "total" },
-  { cc: "10255", financiamento: 0, fornecedor: 0, imposto: 0, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: -19587.00, total: -19587.00, period: "total" },
-  { cc: "10256", financiamento: 0, fornecedor: -9053404.55, imposto: -6515.20, outrosCustos: -4183401.31, outrosRecebimentos: 0, recCliente: 30129119.03, salarios: -14400664.97, total: 2485133.00, period: "total" },
-  { cc: "10259", financiamento: 0, fornecedor: -2304816.08, imposto: 0, outrosCustos: -451517.60, outrosRecebimentos: 0, recCliente: 4272430.86, salarios: -1535372.89, total: -19275.71, period: "total" },
-  { cc: "20001", financiamento: -1103846.72, fornecedor: -3936298.58, imposto: -1354053.24, outrosCustos: -373139.44, outrosRecebimentos: 32710.40, recCliente: 0, salarios: -811411.58, total: -7546039.16, period: "total" },
-  { cc: "40001", financiamento: -110026.30, fornecedor: 0, imposto: 0, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -110026.30, period: "total" },
-  { cc: "Outros", financiamento: -7569361.10, fornecedor: -1150000.00, imposto: -8319592.98, outrosCustos: -853266.99, outrosRecebimentos: 88227.83, recCliente: 0, salarios: -12616.19, total: -17816609.43, period: "total" },
+// Semana 09/03 a 13/03
+const ccMacaeS5: CustoCentroEntry[] = [
+  { cc: "10216", financiamento: 0, fornecedor: 0, imposto: 0, outrosCustos: 0, outrosRecebimentos: 35000, recCliente: 0, salarios: 0, total: 35000, period: "s5" },
+  { cc: "10232", financiamento: 0, fornecedor: 0, imposto: 0, outrosCustos: -8279.31, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -8279.31, period: "s5" },
+  { cc: "10241", financiamento: 0, fornecedor: -490838.98, imposto: 0, outrosCustos: -10079.97, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -500918.95, period: "s5" },
+  { cc: "10251", financiamento: 0, fornecedor: -1326322.02, imposto: -1137.06, outrosCustos: -28541.46, outrosRecebimentos: 0, recCliente: 287444.89, salarios: -37155.40, total: -1105711.05, period: "s5" },
+  { cc: "10256", financiamento: 0, fornecedor: -820957.81, imposto: -513376.29, outrosCustos: -32538.18, outrosRecebimentos: 0, recCliente: 399568.01, salarios: -11163.02, total: -978467.29, period: "s5" },
+  { cc: "10259", financiamento: 0, fornecedor: -1196911.68, imposto: 0, outrosCustos: -5852.17, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -1202763.85, period: "s5" },
+  { cc: "20001", financiamento: 0, fornecedor: -236718.08, imposto: -79834.19, outrosCustos: -7003.88, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -323556.15, period: "s5" },
+  { cc: "40001", financiamento: -44051.36, fornecedor: 0, imposto: 0, outrosCustos: -636, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -44687.36, period: "s5" },
 ];
 
-export const custoCentroMacaeData: CustoCentroEntry[] = [...ccMacaeJan, ...ccMacaeFev, ...ccMacaeS4, ...ccMacaeTotal];
+// Março = S4 + S5
+const ccMacaeMar = mergeCCPeriod("mar", ccMacaeS4, ccMacaeS5);
+
+// Total Acumulado = Jan + Fev + Março
+const ccMacaeTotal = mergeCCPeriod("total", ccMacaeJan, ccMacaeFev, ccMacaeMar);
+
+export const custoCentroMacaeData: CustoCentroEntry[] = [...ccMacaeJan, ...ccMacaeFev, ...ccMacaeS4, ...ccMacaeS5, ...ccMacaeMar, ...ccMacaeTotal];
 
 // ── Tipo de Pagamento/Recebimento por Empresa ──────────────────────
 
