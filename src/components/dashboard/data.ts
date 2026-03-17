@@ -1,5 +1,36 @@
 import type { CustoCentroEntry, Top10Entry, TipoPagamentoEntry } from "./shared";
 
+// ── Merge helpers ──
+function mergeCCPeriod(period: string, ...sources: CustoCentroEntry[][]): CustoCentroEntry[] {
+  const map = new Map<string, CustoCentroEntry>();
+  for (const src of sources) for (const e of src) {
+    const x = map.get(e.cc);
+    if (x) { x.financiamento += e.financiamento; x.fornecedor += e.fornecedor; x.imposto += e.imposto; x.outrosCustos += e.outrosCustos; x.outrosRecebimentos += e.outrosRecebimentos; x.recCliente += e.recCliente; x.salarios += e.salarios; x.total += e.total; }
+    else map.set(e.cc, { ...e, period });
+  }
+  return Array.from(map.values());
+}
+
+function mergeTop10Period(period: string, ...sources: Top10Entry[][]): Top10Entry[] {
+  const map = new Map<string, Top10Entry>();
+  for (const src of sources) for (const e of src) {
+    const x = map.get(e.supplier);
+    if (x) { x.macae += e.macae; x.meb += e.meb; x.total += e.total; }
+    else map.set(e.supplier, { ...e, period });
+  }
+  return Array.from(map.values()).sort((a, b) => a.total - b.total).slice(0, 10);
+}
+
+function mergeTipoPeriod(period: string, ...sources: TipoPagamentoEntry[][]): TipoPagamentoEntry[] {
+  const map = new Map<string, TipoPagamentoEntry>();
+  for (const src of sources) for (const e of src) {
+    const x = map.get(e.company);
+    if (x) { x.financiamento += e.financiamento; x.fornecedor += e.fornecedor; x.imposto += e.imposto; x.outrosCustos += e.outrosCustos; x.outrosRecebimentos += e.outrosRecebimentos; x.recCliente += e.recCliente; x.salarios += e.salarios; x.total += e.total; }
+    else map.set(e.company, { ...e, period });
+  }
+  return Array.from(map.values());
+}
+
 // ── Top 10 Pagamento de Fornecedor ─────────────────────────────────
 
 // Janeiro
