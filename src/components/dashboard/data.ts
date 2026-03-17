@@ -75,21 +75,38 @@ const top10S4: Top10Entry[] = [
   { supplier: "KROMINOX ACOS E META", macae: -169494.20, meb: 0, total: -169494.20, period: "s4" },
 ];
 
+// Semana 09/03 a 13/03
+const top10S5: Top10Entry[] = [
+  { supplier: "PRINER LOCACAO DE EQ", macae: -1024516.77, meb: 0, total: -1024516.77, period: "s5" },
+  { supplier: "VIFERRO", macae: -592387.82, meb: 0, total: -592387.82, period: "s5" },
+  { supplier: "CALDEX", macae: -445482.45, meb: 0, total: -445482.45, period: "s5" },
+  { supplier: "CAIXA DE PREVIDENCIA DOS FUNCIONARI", macae: 0, meb: -233258.48, total: -233258.48, period: "s5" },
+  { supplier: "RAC SOLUCOES", macae: -205350, meb: 0, total: -205350, period: "s5" },
+  { supplier: "JCR COMERCIO, SERVIC", macae: -155450.50, meb: 0, total: -155450.50, period: "s5" },
+  { supplier: "JOTUN BRASIL", macae: -133641.03, meb: 0, total: -133641.03, period: "s5" },
+  { supplier: "VOGEL SOLUCOES EM TELECOM E INF LTD", macae: 0, meb: -123571.21, total: -123571.21, period: "s5" },
+  { supplier: "SLTK MANUTENCOES E L", macae: -120038, meb: 0, total: -120038, period: "s5" },
+  { supplier: "DELL COMPUTADORES DO BRASIL LTDA", macae: 0, meb: -100424.45, total: -100424.45, period: "s5" },
+];
+
+// Março = S4 + S5
+const top10Mar = mergeTop10Period("mar", top10S4, top10S5);
+
 // Total Acumulado
 const top10Total: Top10Entry[] = [
-  { supplier: "FLOW LATINO AMERICAN", macae: -1853699.08, meb: 0, total: -1853699.08, period: "total" },
-  { supplier: "PRINER LOCACAO DE EQ", macae: -1843033.42, meb: 0, total: -1843033.42, period: "total" },
+  { supplier: "PRINER LOCACAO DE EQ", macae: -2867550.19, meb: 0, total: -2867550.19, period: "total" },
+  { supplier: "FLOW LATINO AMERICAN", macae: -1883304.81, meb: 0, total: -1883304.81, period: "total" },
   { supplier: "MAAC TRAVEL CORPORATE LTDA", macae: 0, meb: -1645618.81, total: -1645618.81, period: "total" },
-  { supplier: "FLP TRANSPORTES DE M", macae: -1578667.27, meb: 0, total: -1578667.27, period: "total" },
+  { supplier: "FLP TRANSPORTES DE M", macae: -1581195.16, meb: 0, total: -1581195.16, period: "total" },
   { supplier: "KROMINOX ACOS E META", macae: -1489723.73, meb: 0, total: -1489723.73, period: "total" },
-  { supplier: "JOTUN BRASIL", macae: -1260520.34, meb: 0, total: -1260520.34, period: "total" },
-  { supplier: "FLOW LATINO", macae: -1150000.00, meb: 0, total: -1150000.00, period: "total" },
-  { supplier: "UPSTAR AVIATION", macae: 0, meb: -931000.00, total: -931000.00, period: "total" },
+  { supplier: "JOTUN BRASIL", macae: -1394161.37, meb: 0, total: -1394161.37, period: "total" },
+  { supplier: "FLOW LATINO", macae: -1150000, meb: 0, total: -1150000, period: "total" },
+  { supplier: "UPSTAR AVIATION", macae: 0, meb: -931000, total: -931000, period: "total" },
   { supplier: "CISARENTAL ADMINISTR", macae: -907595.88, meb: 0, total: -907595.88, period: "total" },
   { supplier: "ALMEQ SERVICOS TECNI", macae: -846618.06, meb: 0, total: -846618.06, period: "total" },
 ];
 
-export const top10Data: Top10Entry[] = [...top10Jan, ...top10Fev, ...top10S4, ...top10Total];
+export const top10Data: Top10Entry[] = [...top10Jan, ...top10Fev, ...top10S4, ...top10S5, ...top10Mar, ...top10Total];
 
 // ── CC Mota Engil Brasil ───────────────────────────────────────────
 
