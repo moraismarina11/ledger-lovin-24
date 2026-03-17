@@ -10,8 +10,8 @@ import AgingClientesTab from "@/components/dashboard/AgingClientesTab";
 import ResumoTab from "@/components/dashboard/ResumoTab";
 import { top10Data, custoCentroMEBData, custoCentroMacaeData, tipoPagamentoData } from "@/components/dashboard/data";
 import {
-  fornecedoresDataJan, fornecedoresDataFev, fornecedoresDataS4,
-  clientesDataJan, clientesDataFev, clientesDataS4,
+  fornecedoresDataJan, fornecedoresDataFev, fornecedoresDataS4, fornecedoresDataS5,
+  clientesDataJan, clientesDataFev, clientesDataS4, clientesDataS5,
 } from "@/components/dashboard/agingData";
 import { PERIODS, type PeriodId } from "@/components/dashboard/shared";
 
