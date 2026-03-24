@@ -1,7 +1,7 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { formatCurrency, formatShort } from "./shared";
-import { fornecedoresDataJan, fornecedoresDataFev, fornecedoresDataS5 } from "./agingData";
-import { clientesDataJan, clientesDataFev, clientesDataS5 } from "./agingData";
+import { fornecedoresDataJan, fornecedoresDataFev, fornecedoresDataS6 } from "./agingData";
+import { clientesDataJan, clientesDataFev, clientesDataS6 } from "./agingData";
 import type { FornecedorCompany, ClienteCompany } from "./agingData";
 
 /* ── helpers ── */
@@ -22,10 +22,10 @@ const allCompanies = Array.from(
   new Set([
     ...fornecedoresDataJan.map((c) => c.company),
     ...fornecedoresDataFev.map((c) => c.company),
-    ...fornecedoresDataS5.map((c) => c.company),
+    ...fornecedoresDataS6.map((c) => c.company),
     ...clientesDataJan.map((c) => c.company),
     ...clientesDataFev.map((c) => c.company),
-    ...clientesDataS5.map((c) => c.company),
+    ...clientesDataS6.map((c) => c.company),
   ])
 );
 
@@ -38,8 +38,8 @@ interface PeriodBlock {
 const periods: PeriodBlock[] = [
   { label: "Janeiro", fornData: fornecedoresDataJan, cliData: clientesDataJan },
   { label: "Fevereiro", fornData: fornecedoresDataFev, cliData: clientesDataFev },
-  { label: "Março", fornData: fornecedoresDataS5, cliData: clientesDataS5 },
-  { label: "Total Acumulado", fornData: fornecedoresDataS5, cliData: clientesDataS5 },
+  { label: "Março", fornData: fornecedoresDataS6, cliData: clientesDataS6 },
+  { label: "Total Acumulado", fornData: fornecedoresDataS6, cliData: clientesDataS6 },
 ];
 
 /* ── component ── */
@@ -49,14 +49,14 @@ const ResumoTab = () => {
     company: co,
     "Janeiro": fornecedoresDataJan.find((c) => c.company === co)?.total ?? 0,
     "Fevereiro": fornecedoresDataFev.find((c) => c.company === co)?.total ?? 0,
-    "Março": fornecedoresDataS5.find((c) => c.company === co)?.total ?? 0,
+    "Março": fornecedoresDataS6.find((c) => c.company === co)?.total ?? 0,
   }));
 
   const cliBarData = allCompanies.map((co) => ({
     company: co,
     "Janeiro": clientesDataJan.find((c) => c.company === co)?.aberto ?? 0,
     "Fevereiro": clientesDataFev.find((c) => c.company === co)?.aberto ?? 0,
-    "Março": clientesDataS5.find((c) => c.company === co)?.aberto ?? 0,
+    "Março": clientesDataS6.find((c) => c.company === co)?.aberto ?? 0,
   }));
 
   return (
