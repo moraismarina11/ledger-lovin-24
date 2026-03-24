@@ -51,7 +51,7 @@ const AgingClientesTab = () => {
     <div className="space-y-6">
       <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
         <h2 className="text-2xl font-bold italic text-primary mb-2">Aging Clientes</h2>
-        <p className="text-sm text-muted-foreground mb-4">Data referência: 13/03/2026</p>
+        <p className="text-sm text-muted-foreground mb-4"><p className="text-sm text-muted-foreground mb-4">Data referência: 20/03/2026</p></p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Donut by empresa */}
