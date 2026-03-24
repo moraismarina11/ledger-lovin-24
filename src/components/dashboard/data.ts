@@ -105,16 +105,16 @@ const top10S6: Top10Entry[] = [
 
 // ── Top 10 Março (direct from Excel) ──
 const top10Mar: Top10Entry[] = [
-  { supplier: "FLP TRANSPORTES DE M", macae: -293696.61, meb: 0, total: -293696.61, period: "mar" },
+  { supplier: "MAAC TRAVEL CORPORATE LTDA", macae: 0, meb: -672589.83, total: -672589.83, period: "mar" },
+  { supplier: "FLP TRANSPORTES DE M", macae: -565144.23, meb: 0, total: -565144.23, period: "mar" },
+  { supplier: "UPSTAR AVIATION S/A", macae: 0, meb: -495000, total: -495000, period: "mar" },
+  { supplier: "CISARENTAL ADMINISTR", macae: -375526.03, meb: 0, total: -375526.03, period: "mar" },
+  { supplier: "PRINER LOCACAO DE EQ", macae: -296511.01, meb: 0, total: -296511.01, period: "mar" },
   { supplier: "LUIS FELIPE EBOLI IABRUDI EPP", macae: 0, meb: -266534.32, total: -266534.32, period: "mar" },
-  { supplier: "MAAC TRAVEL CORPORATE LTDA", macae: 0, meb: -246836.73, total: -246836.73, period: "mar" },
-  { supplier: "CISARENTAL ADMINISTR", macae: -230312.76, meb: 0, total: -230312.76, period: "mar" },
+  { supplier: "HYDRATIGHT EQUIPAMEN", macae: -234717.53, meb: 0, total: -234717.53, period: "mar" },
   { supplier: "JRM SERVICOS", macae: -215539.57, meb: 0, total: -215539.57, period: "mar" },
+  { supplier: "REDE D'OR SAO LUIZ S.A", macae: 0, meb: -210210.20, total: -210210.20, period: "mar" },
   { supplier: "SAPIENSIA DESENVOLVI", macae: -192552.82, meb: 0, total: -192552.82, period: "mar" },
-  { supplier: "S.N. REFEICOES E BUFFET LTDA", macae: 0, meb: -187232.50, total: -187232.50, period: "mar" },
-  { supplier: "HIGH SUPPLY SERVICOS", macae: -175009, meb: 0, total: -175009, period: "mar" },
-  { supplier: "HOTEL SAMBA ITABORAI", macae: -174296.80, meb: 0, total: -174296.80, period: "mar" },
-  { supplier: "KROMINOX ACOS E META", macae: -169494.20, meb: 0, total: -169494.20, period: "mar" },
 ];
 
 // ── Top 10 Total Acumulado (direct from Excel) ──
@@ -381,7 +381,8 @@ const ccMEBS6: CustoCentroEntry[] = [
   { cc: "30258", financiamento: 0, fornecedor: 0, imposto: 0, outrosCustos: -19914.15, outrosRecebimentos: 0, recCliente: 0, salarios: -22491.78, total: -42405.93, period: "s6" },
   { cc: "31001", financiamento: 0, fornecedor: 0, imposto: 0, outrosCustos: -7243.44, outrosRecebimentos: 0, recCliente: 0, salarios: -2138.46, total: -9381.90, period: "s6" },
   { cc: "40001", financiamento: -3926952.58, fornecedor: 0, imposto: -14303.81, outrosCustos: -951.71, outrosRecebimentos: 84.17, recCliente: 0, salarios: 0, total: -3942123.93, period: "s6" },
-  { cc: "40004", financiamento: 0, fornecedor: 0, imposto: -1891.56, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -1891.56, period: "s6" },
+  { cc: "40004", financiamento: 0, fornecedor: 0, imposto: -1314.43, outrosCustos: -2029.08, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -3343.51, period: "s6" },
+  { cc: "Outros", financiamento: 0, fornecedor: -2096288.06, imposto: 0, outrosCustos: 0, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -2096288.06, period: "s6" },
 ];
 
 // ── CC MEB Março (direct from Excel) ──
