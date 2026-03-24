@@ -184,7 +184,7 @@ const ccMEBJan: CustoCentroEntry[] = [
   { cc: "30099", financiamento: 0, fornecedor: -53759.10, imposto: 0, outrosCustos: -40498.92, outrosRecebimentos: 0, recCliente: 0, salarios: -4871.51, total: -99129.53, period: "jan" },
   { cc: "30258", financiamento: 0, fornecedor: -594.00, imposto: -7.38, outrosCustos: -3204.10, outrosRecebimentos: 0, recCliente: 0, salarios: -81660.13, total: -85465.61, period: "jan" },
   { cc: "31001", financiamento: 0, fornecedor: -6322.05, imposto: 0, outrosCustos: -13798.49, outrosRecebimentos: 0, recCliente: 0, salarios: -19770.82, total: -39891.36, period: "jan" },
-  { cc: "40001", financiamento: 29358574.67, fornecedor: -189080.15, imposto: -35405.98, outrosCustos: -41471.24, outrosRecebimentos: 83083.76, recCliente: 0, salarios: 0, total: 29175701.07, period: "jan" },
+  { cc: "40001", financiamento: 29358574.67, fornecedor: -189080.15, imposto: -35405.98, outrosCustos: -41471.24, outrosRecebimentos: 83083.76, recCliente: 0, salarios: -1314.43, total: 29174386.64, period: "jan" },
   { cc: "Outros", financiamento: 0, fornecedor: -17025656.39, imposto: -1911650.55, outrosCustos: 0, outrosRecebimentos: 10000000.00, recCliente: 0, salarios: 0, total: -8937306.94, period: "jan" },
 ];
 
