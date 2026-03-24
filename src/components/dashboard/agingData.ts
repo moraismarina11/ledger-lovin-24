@@ -523,10 +523,9 @@ export const fornecedoresDataS6: FornecedorCompany[] = [
   {
     company: "Macaé",
     color: "hsl(40, 90%, 50%)",
-    total: 36115868.09,
+    total: 16982413.26,
     topLabel: "Top 10",
     entries: [
-      { name: "HOMY SRL", value: 19363767.59 },
       { name: "UNIMED DE MACAE COOP", value: 4738372.64 },
       { name: "FLOW LATINO AMERICAN", value: 4630319.97 },
       { name: "HYDRATIGHT EQUIPAMEN", value: 2809772.51 },
@@ -536,6 +535,7 @@ export const fornecedoresDataS6: FornecedorCompany[] = [
       { name: "ASSISLANI LOCACAO DE", value: 576404.64 },
       { name: "ACOS VITAL COM DE TU", value: 421923.23 },
       { name: "JOTUN BRASIL", value: 314620.81 },
+      { name: "CISARENTAL ADMINISTR", value: 230312.76 },
     ],
   },
   {
@@ -931,7 +931,7 @@ export const clientesDataS6: ClienteCompany[] = [
   {
     company: "Mota-Engil Brasil",
     color: "hsl(25, 90%, 55%)",
-    aberto: 136222509.74,
+    aberto: 136222691.74,
     caucao: 27305362.22,
     entries: [
       { name: "PETROLEO BRASILEIRO S A PETROBRAS", value: 131705533.00, caucao: 7296086.40 },
