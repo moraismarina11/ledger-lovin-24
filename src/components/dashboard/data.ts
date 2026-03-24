@@ -504,7 +504,7 @@ const ccMEBTotal: CustoCentroEntry[] = [
   { cc: "30258", financiamento: 0, fornecedor: -1265.20, imposto: -15772.60, outrosCustos: -39932.73, outrosRecebimentos: 0, recCliente: 0, salarios: -313807.24, total: -370777.77, period: "total" },
   { cc: "31001", financiamento: 0, fornecedor: -9595.41, imposto: -4626.06, outrosCustos: -34251.94, outrosRecebimentos: 220.34, recCliente: 0, salarios: -64395.69, total: -112648.76, period: "total" },
   { cc: "40001", financiamento: 118449171.80, fornecedor: -374726.87, imposto: -1675059.06, outrosCustos: -104714.73, outrosRecebimentos: 2592633.67, recCliente: 0, salarios: 0, total: 118887304.82, period: "total" },
-  { cc: "40004", financiamento: 0, fornecedor: 0, imposto: 0, outskirtsCustos: -2029.08, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -2029.08, period: "total" },
+  { cc: "40004", financiamento: 0, fornecedor: 0, imposto: 0, outrosCustos: -2029.08, outrosRecebimentos: 0, recCliente: 0, salarios: 0, total: -2029.08, period: "total" },
   { cc: "Outros", financiamento: 0, fornecedor: -122816581.72, imposto: -2132484.82, outrosCustos: -17389.53, outrosRecebimentos: 14287374.11, recCliente: 0, salarios: 0, total: -110679081.96, period: "total" },
 ];
 
