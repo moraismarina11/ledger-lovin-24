@@ -17,6 +17,12 @@ const sumCaucao = (data: ClienteCompany[]) =>
 const sumMulta = (data: ClienteCompany[]) =>
   data.reduce((s, c) => s + (c.multa ?? 0), 0);
 
+/* ── Março / Total Acumulado values from Aging tabs (full data, not Top 10) ── */
+const MARCO_TOTAL_FORNECEDORES = -82766349.10; // Aging Fornecedores Total Geral
+const MARCO_TOTAL_CLIENTES = 262348088.98;     // Resumo aging total Total Geral
+const MARCO_TOTAL_CAUCAO = 39167579.26;        // Posição Clientes col G
+const MARCO_TOTAL_MULTAS = 6438733.72;         // Não altera
+
 /* Build per-company comparison data */
 const allCompanies = Array.from(
   new Set([
@@ -33,18 +39,36 @@ interface PeriodBlock {
   label: string;
   fornData: FornecedorCompany[];
   cliData: ClienteCompany[];
+  /* Override totals for Março/Total (from Aging, not Posição Top 10) */
+  overrideTotals?: {
+    fornecedores: number;
+    clientes: number;
+    caucao: number;
+    multas: number;
+  };
 }
+
+const marcoOverride = {
+  fornecedores: MARCO_TOTAL_FORNECEDORES,
+  clientes: MARCO_TOTAL_CLIENTES,
+  caucao: MARCO_TOTAL_CAUCAO,
+  multas: MARCO_TOTAL_MULTAS,
+};
 
 const periods: PeriodBlock[] = [
   { label: "Janeiro", fornData: fornecedoresDataJan, cliData: clientesDataJan },
   { label: "Fevereiro", fornData: fornecedoresDataFev, cliData: clientesDataFev },
-  { label: "Março", fornData: fornecedoresDataS7, cliData: clientesDataS7 },
-  { label: "Total Acumulado", fornData: fornecedoresDataS7, cliData: clientesDataS7 },
+  { label: "Março", fornData: fornecedoresDataS7, cliData: clientesDataS7, overrideTotals: marcoOverride },
+  { label: "Total Acumulado", fornData: fornecedoresDataS7, cliData: clientesDataS7, overrideTotals: marcoOverride },
 ];
+
+const getFornTotal = (p: PeriodBlock) => p.overrideTotals ? p.overrideTotals.fornecedores : sumFornecedores(p.fornData);
+const getCliTotal = (p: PeriodBlock) => p.overrideTotals ? p.overrideTotals.clientes : sumClientes(p.cliData);
+const getCaucaoTotal = (p: PeriodBlock) => p.overrideTotals ? p.overrideTotals.caucao : sumCaucao(p.cliData);
+const getMultaTotal = (p: PeriodBlock) => p.overrideTotals ? p.overrideTotals.multas : sumMulta(p.cliData);
 
 /* ── component ── */
 const ResumoTab = () => {
-  /* bar chart data: company × period for fornecedores */
   const fornBarData = allCompanies.map((co) => ({
     company: co,
     "Janeiro": fornecedoresDataJan.find((c) => c.company === co)?.total ?? 0,
@@ -66,35 +90,42 @@ const ResumoTab = () => {
 
         {/* Period summary cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          {periods.map((p) => (
-            <div key={p.label} className="bg-muted/40 rounded-xl border border-border p-5">
-              <h3 className="text-sm font-bold text-primary mb-3">{p.label}</h3>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Total Fornecedores</span>
-                  <span className="font-semibold text-destructive">{formatCurrency(sumFornecedores(p.fornData))}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Total Clientes (Aberto)</span>
-                  <span className="font-semibold text-green-600">{formatCurrency(sumClientes(p.cliData))}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Total Caução</span>
-                  <span className="font-semibold text-foreground">{formatCurrency(sumCaucao(p.cliData))}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Total Multas</span>
-                  <span className="font-semibold text-foreground">{formatCurrency(sumMulta(p.cliData))}</span>
-                </div>
-                <div className="border-t border-border pt-2 flex justify-between font-bold">
-                  <span className="text-muted-foreground">Saldo Líquido</span>
-                  <span className={sumClientes(p.cliData) - sumFornecedores(p.fornData) >= 0 ? "text-green-600" : "text-destructive"}>
-                    {formatCurrency(sumClientes(p.cliData) - sumFornecedores(p.fornData))}
-                  </span>
+          {periods.map((p) => {
+            const totalForn = getFornTotal(p);
+            const totalCli = getCliTotal(p);
+            const totalCaucao = getCaucaoTotal(p);
+            const totalMulta = getMultaTotal(p);
+            const saldo = totalCli + totalCaucao + totalMulta + totalForn; // fornecedores is negative
+            return (
+              <div key={p.label} className="bg-muted/40 rounded-xl border border-border p-5">
+                <h3 className="text-sm font-bold text-primary mb-3">{p.label}</h3>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Total Fornecedores</span>
+                    <span className="font-semibold text-destructive">{formatCurrency(totalForn)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Total Clientes (Aberto)</span>
+                    <span className="font-semibold text-green-600">{formatCurrency(totalCli)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Total Caução</span>
+                    <span className="font-semibold text-foreground">{formatCurrency(totalCaucao)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Total Multas</span>
+                    <span className="font-semibold text-foreground">{formatCurrency(totalMulta)}</span>
+                  </div>
+                  <div className="border-t border-border pt-2 flex justify-between font-bold">
+                    <span className="text-muted-foreground">Saldo Líquido</span>
+                    <span className={saldo >= 0 ? "text-green-600" : "text-destructive"}>
+                      {formatCurrency(saldo)}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
@@ -160,7 +191,7 @@ const ResumoTab = () => {
                     ))}
                     <tr className="font-bold">
                       <td className="py-2">Total</td>
-                      <td className="py-2 text-right text-destructive">{formatCurrency(sumFornecedores(p.fornData))}</td>
+                      <td className="py-2 text-right text-destructive">{formatCurrency(getFornTotal(p))}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -191,8 +222,8 @@ const ResumoTab = () => {
                     ))}
                     <tr className="font-bold">
                       <td className="py-2">Total</td>
-                      <td className="py-2 text-right text-green-600">{formatCurrency(sumClientes(p.cliData))}</td>
-                      <td className="py-2 text-right">{formatCurrency(sumCaucao(p.cliData))}</td>
+                      <td className="py-2 text-right text-green-600">{formatCurrency(getCliTotal(p))}</td>
+                      <td className="py-2 text-right">{formatCurrency(getCaucaoTotal(p))}</td>
                     </tr>
                   </tbody>
                 </table>
