@@ -95,7 +95,7 @@ const ResumoTab = () => {
             const totalCli = getCliTotal(p);
             const totalCaucao = getCaucaoTotal(p);
             const totalMulta = getMultaTotal(p);
-            const saldo = totalCli + totalCaucao + totalMulta + totalForn; // fornecedores is negative
+            const saldo = totalCli + totalForn; // fornecedores is negative
             return (
               <div key={p.label} className="bg-muted/40 rounded-xl border border-border p-5">
                 <h3 className="text-sm font-bold text-primary mb-3">{p.label}</h3>
