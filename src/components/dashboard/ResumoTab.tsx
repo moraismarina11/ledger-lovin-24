@@ -18,8 +18,8 @@ const sumMulta = (data: ClienteCompany[]) =>
   data.reduce((s, c) => s + (c.multa ?? 0), 0);
 
 /* ── Março / Total Acumulado values from Aging tabs (full data, not Top 10) ── */
-const MARCO_TOTAL_FORNECEDORES = -82766349.10; // Aging Fornecedores Total Geral
-const MARCO_TOTAL_CLIENTES = 262374540.98;     // Resumo aging total Total Geral
+const MARCO_TOTAL_FORNECEDORES = -41383174.55; // Aging Fornecedores Total Geral
+const MARCO_TOTAL_CLIENTES = 131187270.49;     // Resumo aging total Total Geral
 const MARCO_TOTAL_CAUCAO = 39167579.26;        // Posição Clientes col G
 const MARCO_TOTAL_MULTAS = 6438733.72;         // Não altera
 
