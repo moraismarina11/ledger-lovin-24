@@ -1,7 +1,7 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { formatCurrency, formatShort } from "./shared";
-import { fornecedoresDataJan, fornecedoresDataFev, fornecedoresDataS6 } from "./agingData";
-import { clientesDataJan, clientesDataFev, clientesDataS6 } from "./agingData";
+import { fornecedoresDataJan, fornecedoresDataFev, fornecedoresDataS7 } from "./agingData";
+import { clientesDataJan, clientesDataFev, clientesDataS7 } from "./agingData";
 import type { FornecedorCompany, ClienteCompany } from "./agingData";
 
 /* ── helpers ── */
