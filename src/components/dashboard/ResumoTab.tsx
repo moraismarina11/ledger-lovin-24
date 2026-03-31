@@ -49,14 +49,14 @@ const ResumoTab = () => {
     company: co,
     "Janeiro": fornecedoresDataJan.find((c) => c.company === co)?.total ?? 0,
     "Fevereiro": fornecedoresDataFev.find((c) => c.company === co)?.total ?? 0,
-    "Março": fornecedoresDataS6.find((c) => c.company === co)?.total ?? 0,
+    "Março": fornecedoresDataS7.find((c) => c.company === co)?.total ?? 0,
   }));
 
   const cliBarData = allCompanies.map((co) => ({
     company: co,
     "Janeiro": clientesDataJan.find((c) => c.company === co)?.aberto ?? 0,
     "Fevereiro": clientesDataFev.find((c) => c.company === co)?.aberto ?? 0,
-    "Março": clientesDataS6.find((c) => c.company === co)?.aberto ?? 0,
+    "Março": clientesDataS7.find((c) => c.company === co)?.aberto ?? 0,
   }));
 
   return (
