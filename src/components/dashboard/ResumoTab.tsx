@@ -23,6 +23,18 @@ const MARCO_TOTAL_CLIENTES = 131187270.49;     // Resumo aging total Total Geral
 const MARCO_TOTAL_CAUCAO = 39167579.26;        // Posição Clientes col G
 const MARCO_TOTAL_MULTAS = 6438733.72;         // Não altera
 
+/* ── Janeiro overrides ── */
+const JAN_TOTAL_FORNECEDORES = -70281028.78;
+const JAN_TOTAL_CLIENTES = 231373004.95;
+const JAN_TOTAL_CAUCAO = 37766168.04;
+const JAN_TOTAL_MULTAS = 6438733.72;
+
+/* ── Fevereiro overrides ── */
+const FEV_TOTAL_FORNECEDORES = -30877801.47;
+const FEV_TOTAL_CLIENTES = 111140057.96;
+const FEV_TOTAL_CAUCAO = 38378987.77;
+const FEV_TOTAL_MULTAS = 6438733.72;
+
 /* Build per-company comparison data */
 const allCompanies = Array.from(
   new Set([
@@ -48,7 +60,21 @@ interface PeriodBlock {
   };
 }
 
-const marcoOverride = {
+const janOverride = {
+  fornecedores: JAN_TOTAL_FORNECEDORES,
+  clientes: JAN_TOTAL_CLIENTES,
+  caucao: JAN_TOTAL_CAUCAO,
+  multas: JAN_TOTAL_MULTAS,
+};
+
+const fevOverride = {
+  fornecedores: FEV_TOTAL_FORNECEDORES,
+  clientes: FEV_TOTAL_CLIENTES,
+  caucao: FEV_TOTAL_CAUCAO,
+  multas: FEV_TOTAL_MULTAS,
+};
+
+const marOverride = {
   fornecedores: MARCO_TOTAL_FORNECEDORES,
   clientes: MARCO_TOTAL_CLIENTES,
   caucao: MARCO_TOTAL_CAUCAO,
@@ -56,10 +82,10 @@ const marcoOverride = {
 };
 
 const periods: PeriodBlock[] = [
-  { label: "Janeiro", fornData: fornecedoresDataJan, cliData: clientesDataJan },
-  { label: "Fevereiro", fornData: fornecedoresDataFev, cliData: clientesDataFev },
-  { label: "Março", fornData: fornecedoresDataS7, cliData: clientesDataS7, overrideTotals: marcoOverride },
-  { label: "Total Acumulado", fornData: fornecedoresDataS7, cliData: clientesDataS7, overrideTotals: marcoOverride },
+  { label: "Janeiro", fornData: fornecedoresDataJan, cliData: clientesDataJan, overrideTotals: janOverride },
+  { label: "Fevereiro", fornData: fornecedoresDataFev, cliData: clientesDataFev, overrideTotals: fevOverride },
+  { label: "Março", fornData: fornecedoresDataS7, cliData: clientesDataS7, overrideTotals: marOverride },
+  { label: "Total Acumulado", fornData: fornecedoresDataS7, cliData: clientesDataS7, overrideTotals: marOverride },
 ];
 
 const getFornTotal = (p: PeriodBlock) => p.overrideTotals ? p.overrideTotals.fornecedores : sumFornecedores(p.fornData);
