@@ -22,10 +22,10 @@ const allCompanies = Array.from(
   new Set([
     ...fornecedoresDataJan.map((c) => c.company),
     ...fornecedoresDataFev.map((c) => c.company),
-    ...fornecedoresDataS6.map((c) => c.company),
+    ...fornecedoresDataS7.map((c) => c.company),
     ...clientesDataJan.map((c) => c.company),
     ...clientesDataFev.map((c) => c.company),
-    ...clientesDataS6.map((c) => c.company),
+    ...clientesDataS7.map((c) => c.company),
   ])
 );
 
@@ -38,8 +38,8 @@ interface PeriodBlock {
 const periods: PeriodBlock[] = [
   { label: "Janeiro", fornData: fornecedoresDataJan, cliData: clientesDataJan },
   { label: "Fevereiro", fornData: fornecedoresDataFev, cliData: clientesDataFev },
-  { label: "Março", fornData: fornecedoresDataS6, cliData: clientesDataS6 },
-  { label: "Total Acumulado", fornData: fornecedoresDataS6, cliData: clientesDataS6 },
+  { label: "Março", fornData: fornecedoresDataS7, cliData: clientesDataS7 },
+  { label: "Total Acumulado", fornData: fornecedoresDataS7, cliData: clientesDataS7 },
 ];
 
 /* ── component ── */
