@@ -1172,16 +1172,16 @@ export const clientesDataS7: ClienteCompany[] = [
   {
     company: "Macaé",
     color: "hsl(40, 90%, 50%)",
-    aberto: 72046621.29,
-    caucao: 10739040.06,
+    aberto: 48128724.34,
+    caucao: 10776347.26,
     multa: 6438733.72,
     entries: [
-      { name: "Petrobrás / 251", value: 55395829.75 },
-      { name: "Petrobrás / 256", value: 14552320.85, caucao: 6649130.66 },
+      { name: "Petrobrás / 251", value: 42969234.35 },
+      { name: "Petrobrás / 256", value: 3060432.65, caucao: 6686437.86 },
       { name: "Petrobrás / 232", value: 1137194.83 },
       { name: "Petrobrás / 241", value: 525985.31, caucao: 3784496.74 },
       { name: "Outros Clientes / Base", value: 313383.05 },
-      { name: "Petrobrás / 259", value: 121908.50, caucao: 305412.66 },
+      { name: "Petrobrás / 259", value: 122494.15, caucao: 305412.66 },
     ],
   },
   {
