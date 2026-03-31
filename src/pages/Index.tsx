@@ -27,7 +27,8 @@ const Index = () => {
     if (period === "fev") return fornecedoresDataFev;
     if (period === "s4") return fornecedoresDataS4;
     if (period === "s5") return fornecedoresDataS5;
-    return fornecedoresDataS6; // s6, mar, total use latest snapshot
+    if (period === "s6") return fornecedoresDataS6;
+    return fornecedoresDataS7; // s7, mar, total use latest snapshot
   };
 
   const getClientesData = () => {
