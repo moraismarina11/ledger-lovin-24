@@ -54,7 +54,7 @@ export interface AgingClienteEntry {
 }
 
 export const agingClientesData: AgingClienteEntry[] = [
-  { empresa: "CONSÓRCIO ECB SEA_ALSUB", cliente: "ECOLOGIKA AMBIENTAL TRANSPORTE", aReceber: 26452.00, aVencer: 7064.00, ate30: 19388.00, de31a60: 0, de61a90: 0, de91a180: 0, de181a1ano: 0, de1a2anos: 0, de2a3anos: 0, mais3anos: 0 },
+  { empresa: "CONSÓRCIO ECB SEA_ALSUB", cliente: "ECOLOGIKA AMBIENTAL TRANSPORTE", aReceber: 52904.00, aVencer: 14128.00, ate30: 38776.00, de31a60: 0, de61a90: 0, de91a180: 0, de181a1ano: 0, de1a2anos: 0, de2a3anos: 0, mais3anos: 0 },
   { empresa: "ME FUNDAÇÕES BRASIL LTDA", cliente: "BESIX-ECB SPE LTDA", aReceber: 54195716.02, aVencer: 1626510.18, ate30: 29049205.84, de31a60: 0, de61a90: 23520000.00, de91a180: 0, de181a1ano: 0, de1a2anos: 0, de2a3anos: 0, mais3anos: 0 },
   { empresa: "MOTA-ENGIL BRASIL S/A", cliente: "PETROLEO BRASILEIRO S A PETROBRAS", aReceber: 97539891.08, aVencer: 94808392.36, ate30: 0, de31a60: 0, de61a90: 0, de91a180: 0, de181a1ano: 0, de1a2anos: 220088.22, de2a3anos: 833322.14, mais3anos: 1678088.36 },
   { empresa: "MOTA-ENGIL BRASIL S/A", cliente: "AUTOPISTA FERNAO DIAS S.A", aReceber: 1089504.72, aVencer: 0, ate30: 0, de31a60: 0, de61a90: 0, de91a180: 0, de181a1ano: 0, de1a2anos: 0, de2a3anos: 0, mais3anos: 1089504.72 },
@@ -80,9 +80,9 @@ export const agingClientesData: AgingClienteEntry[] = [
 ];
 
 export const agingClientesTotals = {
-  aReceber: 262348088.98,
-  aVencer: 193683762.72,
-  ate30: 31488272.12,
+  aReceber: 262374540.98,
+  aVencer: 193690826.72,
+  ate30: 31507660.12,
   de31a60: 882075.64,
   de61a90: 23958620.92,
   de91a180: 379160.24,
