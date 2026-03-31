@@ -36,7 +36,8 @@ const Index = () => {
     if (period === "fev") return clientesDataFev;
     if (period === "s4") return clientesDataS4;
     if (period === "s5") return clientesDataS5;
-    return clientesDataS6;
+    if (period === "s6") return clientesDataS6;
+    return clientesDataS7;
   };
 
   return (
